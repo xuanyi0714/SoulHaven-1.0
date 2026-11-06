@@ -1,0 +1,52 @@
+:root{font-family:"Microsoft YaHei",sans-serif;color:#36304e;background:#24243a}*{box-sizing:border-box}body{margin:0;min-height:100vh}.wallpaper{position:fixed;inset:0;background:#555268 center/cover no-repeat;z-index:-2}.wallpaper:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(25,21,40,.18),rgba(32,26,48,.3))}.topbar{display:flex;align-items:center;gap:3rem;padding:22px clamp(20px,5vw,80px);color:white;text-shadow:0 2px 12px #242036}.topbar a{color:inherit;text-decoration:none}.brand{font-family:serif;font-size:35px;font-weight:bold;white-space:nowrap}.brand span{font-size:17px}.topbar nav{display:flex;gap:clamp(18px,3vw,48px);flex-wrap:wrap}.layout{display:flex;justify-content:flex-end;padding:clamp(20px,4vw,60px) clamp(20px,6vw,110px) 60px}.profile{width:min(100%,620px);padding:clamp(24px,3vw,42px);border:1px solid rgba(255,255,255,.7);border-radius:22px;background:rgba(250,248,255,.86);box-shadow:0 20px 70px #1f193b38;backdrop-filter:blur(14px)}.profile-top,.actions,.dialog-actions{display:flex;align-items:center;gap:10px}.profile-top{justify-content:space-between;flex-wrap:wrap}.back-link{color:#77718d;text-decoration:none;font-size:14px}.actions button,.dialog-actions button{border:1px solid #aaa0d1;background:#fff9;color:#655497;border-radius:99px;padding:9px 22px;cursor:pointer}.actions button:last-child,.dialog-actions button:last-child{background:#8170c3;color:white;border-color:#8170c3}button:disabled{opacity:.55;cursor:wait}.eyebrow{margin:38px 0 8px;color:#9285b5;letter-spacing:.16em;font-size:11px}h1{font-family:serif;font-size:clamp(30px,4vw,42px);margin:0;overflow-wrap:anywhere}.english{color:#8e83a5;letter-spacing:.15em}.divider{display:flex;align-items:center;gap:12px;color:#a297d0;margin:26px 0}.divider:before,.divider:after{content:"";height:1px;background:#cbc1e1;flex:1}.fields{display:flex;flex-wrap:wrap;gap:20px}.field{flex:1 1 180px;min-width:0}.field.wide{flex-basis:100%}.field label{display:block;color:#9386ae;font-size:13px;margin-bottom:7px}.field-value{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7}.field input,.field textarea{width:100%;border:1px solid #d3cbe1;border-radius:9px;background:#ffffffc7;padding:10px;color:#39314c;font:inherit}.field textarea{min-height:95px;resize:vertical}.save-reminder{text-align:center;margin:32px 0 0;color:#9b8ab6;font-size:13px}#status{color:#766c88}dialog{border:1px solid #eee8fa;border-radius:18px;padding:28px;max-width:calc(100vw - 36px);color:#403653;box-shadow:0 20px 80px #211a3e55}dialog::backdrop{background:#211b35aa}.dialog-actions{justify-content:flex-end;flex-wrap:wrap;margin-top:24px}[hidden]{display:none!important}@media(max-width:600px){.topbar{gap:16px;align-items:flex-start;flex-direction:column;padding:18px 20px}.topbar nav{font-size:14px}.layout{padding:20px 14px 35px}.profile{padding:24px 20px}.eyebrow{margin-top:28px}.actions button{padding:8px 16px}}
+
+/* Keep navigation and profile actions available while the archive scrolls. */
+.topbar {
+  position: sticky;
+  top: 16px;
+  z-index: 10;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin: 20px 0 0 clamp(20px, 4vw, 64px);
+  padding: 10px 16px 10px 22px;
+  gap: 24px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 22px;
+  background: linear-gradient(120deg, rgba(40, 34, 56, .66), rgba(56, 51, 77, .48));
+  box-shadow: 0 10px 32px rgba(20, 16, 31, .18), inset 0 1px rgba(255, 255, 255, .12);
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+}
+.topbar .brand { font-size: 28px; letter-spacing: .04em; }
+.topbar .brand span { color: #dfd4ff; font-size: 14px; }
+.topbar nav { gap: 4px; }
+.topbar nav a { padding: 9px 13px; border-radius: 12px; font-size: 14px; transition: background-color .18s ease, color .18s ease; }
+.topbar nav a:hover, .topbar nav a:focus-visible { background: rgba(255, 255, 255, .15); }
+.topbar nav a[aria-current="page"] { background: rgba(255, 255, 255, .15); color: #fff; }
+@media (max-width: 600px) {
+  .topbar { top: 10px; margin: 12px 14px 0; padding: 9px 12px; gap: 8px; flex-direction: row; align-items: center; }
+  .topbar .brand { font-size: 23px; }
+  .topbar nav { gap: 0; }
+  .topbar nav a { padding: 8px; font-size: 13px; }
+}
+.profile-top { position: sticky; top: calc(var(--topbar-height, 120px) + 8px); z-index: 2; margin: -12px -14px 0; padding: 12px 14px; border-radius: 12px; background: rgba(250, 248, 255, .96); box-shadow: 0 4px 16px rgba(42, 34, 65, .08); }
+
+/* The wallpaper is visible immediately; navigation and profile enter in order. */
+@keyframes detail-rise-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.topbar { animation: detail-rise-in 1s cubic-bezier(.22, 1, .36, 1) both; }
+.profile { animation: detail-rise-in 1.4s cubic-bezier(.22, 1, .36, 1) 1s backwards; }
+@media (prefers-reduced-motion: reduce) {
+  .topbar, .profile { animation: none; }
+}
+
+@media (max-width: 600px) and (pointer: coarse) {
+  .topbar nav a { display: inline-flex; align-items: center; min-height: 44px; }
+  .profile-top { position: static; gap: 4px; }
+  .actions, .dialog-actions { flex-wrap: wrap; }
+  .actions button, .dialog-actions button { min-height: 44px; }
+  .field input, .field textarea { font-size: 16px; }
+  .english { overflow-wrap: anywhere; }
+}

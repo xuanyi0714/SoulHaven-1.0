@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="灵栖主页">
+        <title>灵栖</title>
+        <link rel="stylesheet" href="/static/css/home.css">
+        <link rel="stylesheet" href="/static/css/home-motion.css">
+        <link rel="stylesheet" href="/static/css/home-entrance.css">
+        <link rel="stylesheet" href="/static/css/home/scenery.css">
+        <link rel="icon" href="/static/pictures/favicon.png">
+        <script>
+            if (Element.prototype.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.documentElement.classList.add('home-pending');
+            }
+        </script>
+        <script defer src="/static/js/home/entrance.js" onerror="document.documentElement.classList.remove('home-pending')"></script>
+        <script defer src="/static/js/home/wallpaper.js"></script>
+        <script defer src="/static/js/home/scenery.js"></script>
+      <link rel="stylesheet" href="/static/css/entrance-skip.css">
+  <script src="/static/js/skip-entrance.js" defer></script>
+  <script src="/static/js/group-chat.js" defer></script>
+</head>
+    <body style="margin:0;">
+        <div class="home-backdrop" aria-hidden="true">
+            <video class="home-wallpaper" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        </div>
+        <section id="main" style="
+            min-height: 80vh;
+            padding-top:18px;
+            ">
+            <header class="navigation-bar" id="navigation" data-home-reveal="navigation">
+                <span class="main" style="
+                    font-family:serif;
+                    font-weight:630;
+                    font-size:50px;
+                    margin:0px;
+                    display:inline-block;
+                ">灵栖</span>
+                <span class="main star" style="
+                    position:relative;
+                    bottom:18px;
+                ">✦</span>
+                <a class="entrance active" href="#navigation" title="跳转至首页">首页</a>
+                <a class="entrance" title="跳转至角色档案" href="/lingqi_characters.html">角色档案</a>
+                <a class="entrance" title="与角色单独对话" href="/chat.html">角色私聊</a>
+                <a class="entrance" href="#group-chat" data-group-chat>角色群聊</a>
+                <a class="entrance" title="跳转至世界设定" href="/static/html/world.html">世界设定</a>
+                <a class="entrance" data-home-action title="快速开始聊天" href="/chat.html" style="
+                    color:rgb(255, 255, 255);
+                    background:radial-gradient(
+                        ellipse at center,
+                        rgb(76, 91, 238) 0%,
+                        rgb(96, 110, 247) 55%,
+                        rgb(135, 147, 255) 100%
+                    );
+                    border-radius:99px;
+                    padding:14px 50px;
+                ">立即进入</a>
+            </header>
+            <header class="publicity" id="foreword" data-home-reveal="label" style="
+                position:relative;
+                left:170px;
+                top:70px;
+            ">
+                <span class="star" style="
+                        position:absolute;
+                        left:20px;
+                    ">✦</span>
+                <span class="label">AI角色互动之旅</span>
+            </header>
+            <div class="publicity" data-home-reveal="title" style="
+                font-size:120px;
+                font-weight:610;                              
+                top:55px;               
+            ">灵栖</div>
+            <div class="publicity" data-home-reveal="tagline" style="
+                top:70px;
+                font-size:33px;
+                font-weight:570;
+            ">与你喜欢的角色，在同一个持续发展的世界里相遇</div>
+            <div class="publicity" data-home-reveal="description" style="
+                font-size:25px;
+                font-weight:400;
+                top:90px;
+                font-family:sans-serif;
+                color: rgba(34, 59, 66, 0.95);
+
+            ">
+                不只是聊天，而是拥有独立记忆、关系与成长轨迹
+                <br>
+                的角色互动体验
+            </div>
+            <a class="start" data-home-action title="开启我的旅行" href="/chat.html" target style="
+                color:white;
+                left:165px;
+                background: radial-gradient(
+                    ellipse at center,
+                  rgb(76, 91, 238) 0%,
+                  rgb(86, 101, 244) 55%,
+                  rgb(111, 126, 252) 82%,
+                  rgb(164, 175, 255) 100%
+                );
+                box-shadow:inset 0 0 14px rgba(255, 255, 255, 0.42),0 7px 18px rgba(76, 91, 238, 0.32);
+                text-decoration:none;
+            ">
+            <span>开始体验</span>
+            <span>→</span>
+            </a>
+            <a class="start" data-home-action href="/lingqi_characters.html" target title="快速跳转至角色档案" style="
+                color:black;
+                background-color: white;
+                left:190px;
+                padding:14px 70px;
+                font-family:serif;
+                font-weight:500;
+                text-decoration:none;
+            ">查看角色</a>
+        </section>
+        <div class="home-panel-slot">
+            <section id="bottom" data-home-reveal="background" style="
+                min-height:30vh;
+                display:flex;
+                align-items:center;
+                gap:30px;
+                padding-left: 6%;
+                padding-right: 6%;
+            ">
+                <section class="characteristic" data-home-reveal="feature" style="
+                    box-shadow: 0 0 26px 5px rgba(105, 180, 245, 0.20),
+                                inset 0 0 12px rgba(105, 180, 245, 0.10);
+                    border-color: rgba(110, 175, 235, 0.28);
+                ">
+                    <span class="feature-icon feature-icon--memory"><img src="/static/pictures/memory.png" width="130" alt="独立记忆"></span>
+                    <section class="text">
+                        <h1 class="bottom-title">独立记忆</h1>
+                        <p class="bottom-text">每个角色都有自己的长期记忆
+                            <br>
+                            与相处历史。</p>
+                    </section>
+                    <span class="small feature-accent feature-accent--note" aria-hidden="true"><img src="/static/pictures/note.png" alt=""></span>
+                </section>
+                <section class="characteristic" data-home-reveal="feature" style="
+                    box-shadow: 0 0 28px 6px rgba(245, 165, 200, 0.22),
+                                inset 0 0 12px rgba(245, 165, 200, 0.11);
+                    border-color: rgba(235, 160, 190, 0.30);
+                ">
+                    <span class="feature-icon feature-icon--like"><img src="/static/pictures/like.png" width="130" alt="关系成长"></span>
+                    <section class="text">
+                        <h1 class="bottom-title">关系成长</h1>
+                        <p class="bottom-text">关系不会瞬间拉满，而会在
+                            <br>
+                            互动中缓慢变化。</p>
+                    </section>
+                    <span class="small feature-accent feature-accent--growth" aria-hidden="true"><img src="/static/pictures/pick_up.png" alt=""></span>
+                </section>
+                <section class="characteristic" data-home-reveal="feature" style="
+                    box-shadow: 0 0 28px 6px rgba(85, 115, 230, 0.22),
+                                inset 0 0 13px rgba(85, 115, 230, 0.11);
+                    border-color: rgba(90, 115, 225, 0.30);
+                ">
+                    <span class="feature-icon feature-icon--world"><img src="/static/pictures/world.png" width="130" alt="小型世界"></span>
+                    <section class="text">
+                        <h1 class="bottom-title">小型世界</h1>
+                        <p class="bottom-text">角色不只围绕你，也会拥有
+                            <br>
+                            自己的生活与联系。</p>
+                    </section>
+                    <span class="small feature-accent feature-accent--city" aria-hidden="true"><img src="/static/pictures/city.png" alt=""></span>
+                </section>
+            </section>
+        </div>
+    </body>
+</html>

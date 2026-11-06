@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1672" height="941" viewBox="0 0 1672 941">
+  <title>Stationary pedestal supporting the right library vase</title>
+  <defs>
+    <linearGradient id="stone" x1="0" x2="1">
+      <stop stop-color="#c4c6e8"/>
+      <stop offset=".25" stop-color="#f6f4ff"/>
+      <stop offset=".58" stop-color="#eeedfc"/>
+      <stop offset="1" stop-color="#b5bcdf"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#fffaf5"/>
+      <stop offset="1" stop-color="#d2d3ed"/>
+    </linearGradient>
+    <radialGradient id="contact">
+      <stop stop-color="#9699c4" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#a5a7d2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Coordinates share the room and plant layers' original 1672 x 941 space. -->
+  <ellipse cx="1279" cy="653" rx="38" ry="8" fill="url(#contact)"/>
+  <path d="M1255 647 Q1278.5 641 1302 647 L1302 652 Q1278.5 659 1255 652Z" fill="url(#stone)" stroke="#bfc4e2" stroke-width=".7"/>
+  <ellipse cx="1278.5" cy="647" rx="23.5" ry="5" fill="url(#top)"/>
+  <path d="M1264 532 Q1269 545 1267 566 L1265 638 Q1262 642 1260 645 Q1278.5 651 1297 645 Q1295 641 1292 638 L1290 566 Q1288 545 1293 532Z" fill="url(#stone)" stroke="#c6c9e6" stroke-width=".7"/>
+  <path d="M1271 543 L1270 637 M1277 545 L1277 640 M1284 544 L1286 638" fill="none" stroke="#c4c8e7" stroke-opacity=".55" stroke-width="1.1"/>
+  <path d="M1273 544 L1272 635 M1279 545 L1279 638" fill="none" stroke="#fffaf5" stroke-opacity=".7" stroke-width="1"/>
+  <path d="M1253 525 L1253 530 Q1278.5 538 1304 530 L1304 525Z" fill="url(#stone)" stroke="#bdc3e1" stroke-width=".7"/>
+  <ellipse cx="1278.5" cy="525" rx="25.5" ry="5.5" fill="url(#top)" stroke="#d3d5ed" stroke-width=".8"/>
+  <ellipse cx="1278.5" cy="524.5" rx="14" ry="2" fill="#aeb4d7" opacity=".25"/>
+</svg>

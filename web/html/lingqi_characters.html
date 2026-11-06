@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="角色档案展示">
+        <title>角色档案展示</title>
+        <link rel="icon" href="/static/pictures/favicon.png">
+        <link rel="stylesheet" href="/static/css/characters.css">
+        <link rel="stylesheet" href="/static/css/archive-responsive.css">
+        <link rel="stylesheet" href="/static/css/archive/background.css">
+      <link rel="stylesheet" href="/static/css/entrance-skip.css">
+  <script src="/static/js/skip-entrance.js" defer></script>
+  <script src="/static/js/media.js" defer></script>
+  <script src="/static/js/group-chat.js" defer></script>
+</head>
+    <body>
+        <section id="main">
+            <header class="navigation-bar" id="navigation">
+                <span class="main" style="
+                    font-family:serif;
+                    font-weight:630;
+                    font-size:50px;
+                    margin:0px;
+                    display:inline-block;
+                ">灵栖</span>
+                <span class="main star" style="
+                    position:relative;
+                    bottom:18px;
+                ">✦</span>
+                <a class="entrance" href="/lingqi_home_v1.html" title="跳转至首页">首页</a>
+                <a class="entrance active" title="跳转至角色档案" href="#navigation">角色档案</a>
+                <a class="entrance" title="与角色单独对话" href="/chat.html">角色私聊</a>
+                <a class="entrance" href="#group-chat" data-group-chat>角色群聊</a>
+                <a class="entrance" title="跳转至世界设定" href="/static/html/world.html">世界设定</a>
+                <a class="entrance" title="快速开始聊天" href="/chat.html" style="
+                    color:rgb(255, 255, 255);
+                    background:radial-gradient(
+                        ellipse at center,
+                        rgb(76, 91, 238) 0%,
+                        rgb(96, 110, 247) 55%,
+                        rgb(135, 147, 255) 100%
+                    );
+                    border-radius:99px;
+                    padding:14px 50px;
+                ">立即进入</a>
+            </header>
+            <main class="archive" aria-labelledby="archiveTitle">
+                <div class="archive__intro">
+                    <div>
+                        <p class="archive__eyebrow">SOULHAVEN · CHARACTER ARCHIVE</p>
+                        <h1 id="archiveTitle">角色档案</h1>
+                        <p class="archive__subtitle">在这里，遇见每一个独特的灵魂。</p>
+                    </div>
+                    <label class="archive-search">
+                        <span class="archive-search__label">搜索角色</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m15.5 15.5 4 4"></path></svg>
+                        <input id="characterSearch" type="search" placeholder="搜索角色名称" autocomplete="off">
+                    </label>
+                </div>
+                <div class="archive__meta">
+                    <div class="archive__count" id="archiveCount" aria-live="polite">正在加载角色…</div>
+                </div>
+                <p class="archive__status" id="archiveStatus" role="status" hidden></p>
+                <div class="archive-grid" id="characterGrid"></div>
+                <nav class="archive-pagination" id="archivePagination" aria-label="角色档案分页" hidden></nav>
+            </main>
+        </section>
+        <script src="/static/js/characters.js" defer></script>
+        <script src="/static/js/archive/background.js" defer></script>
+    </body>
+</html>

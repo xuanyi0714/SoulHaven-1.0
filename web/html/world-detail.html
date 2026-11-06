@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="世界设定详情"><title>世界设定 · 灵栖</title>
+  <link rel="icon" href="/static/pictures/favicon.png"><link rel="stylesheet" href="/static/css/world.css"><link rel="stylesheet" href="/static/css/world-detail.css">
+  <script src="/static/js/world-detail.js" defer></script>
+  <script src="/static/js/media.js" defer></script>
+  <script src="/static/js/group-chat.js" defer></script>
+</head>
+<body class="detail-page">
+  <div class="detail-scene" aria-hidden="true"></div>
+  <header class="navigation" aria-label="主导航"><a class="brand" href="/" aria-label="灵栖首页">灵栖<span>✦</span></a><nav class="navigation__links" aria-label="页面导航"><a href="/">首页</a><a href="/characters.html">角色档案</a><a href="/chat.html">角色私聊</a><a href="#group-chat" data-group-chat>角色群聊</a><a href="/static/html/world.html" aria-current="page">世界设定</a><a class="navigation__start" href="/chat.html">立即进入</a></nav></header>
+  <main class="detail-layout">
+    <div class="detail-actions"><a class="detail-back" href="/static/html/world.html">← 返回世界设定</a><a class="detail-back" id="editWorld" href="/static/html/world.html">编辑世界观</a></div>
+    <article class="detail-panel" aria-labelledby="detailTitle">
+      <p class="world__label" id="detailKind">WORLD ARCHIVE</p><h1 id="detailTitle">世界设定</h1><p class="detail-intro" id="detailIntro">正在加载世界设定…</p>
+      <div id="detailContents" hidden>
+        <section class="detail-section" aria-labelledby="detailCoreTitle"><div class="detail-section__heading"><span>01</span><div><p>THE WORLD AT A GLANCE</p><h2 id="detailCoreTitle">常驻世界设定</h2></div></div><div id="detailCore"></div></section>
+        <section class="detail-section" aria-labelledby="detailEntriesTitle"><div class="detail-section__heading"><span>02</span><div><p>STORIES &amp; LORE</p><h2 id="detailEntriesTitle">详细世界资料</h2></div></div><div id="detailEntries"></div></section>
+        <section class="detail-section" aria-labelledby="detailDirectoryTitle"><div class="detail-section__heading"><span>03</span><div><p>THE INDEX</p><h2 id="detailDirectoryTitle">资料目录</h2></div></div><div id="detailDirectory"></div></section>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="灵栖世界设定">
+  <title>世界设定 · 灵栖</title>
+  <link rel="icon" href="/static/pictures/favicon.png">
+  <link rel="stylesheet" href="/static/css/world.css">
+  <script src="/static/js/media.js" defer></script>
+  <script src="/static/js/group-chat.js" defer></script>
+</head>
+<body>
+  <div class="world-scene" aria-hidden="true"><video class="world-scene__video" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video></div>
+  <header class="navigation" aria-label="主导航">
+    <a class="brand" href="/" aria-label="灵栖首页">灵栖<span>✦</span></a>
+    <nav class="navigation__links" aria-label="页面导航">
+      <a href="/">首页</a><a href="/characters.html">角色档案</a><a href="/chat.html">角色私聊</a><a href="#group-chat" data-group-chat>角色群聊</a><a href="/static/html/world.html" aria-current="page">世界设定</a>
+      <a class="navigation__start" href="/chat.html">立即进入</a>
+    </nav>
+  </header>
+  <main class="world">
+    <div class="world__heading">
+      <p class="eyebrow">SOULHAVEN <span>✦</span> WORLD ARCHIVE</p>
+      <h1>世界设定</h1>
+      <p class="world__subtitle">每个故事，都有一片属于自己的天地。</p>
+    </div>
+    <section class="world-archive" aria-labelledby="world-list-title">
+      <div class="world-archive__heading">
+        <div><p class="world__label">YOUR WORLDS</p><h2 id="world-list-title">我的世界</h2></div>
+        <p>在这里，收藏故事发生的地方</p>
+      </div>
+      <div class="world-archive__grid">
+        <button class="world-create" type="button" id="openWorldEditor">
+          <span class="world-create__icon" aria-hidden="true">＋</span>
+          <span class="world-create__title">新建世界观</span>
+          <span class="world-create__hint">为新的故事创造天地</span>
+        </button>
+
+      </div>
+    </section>
+    <p class="world__footer">山河入卷，万象成篇 <span>✧</span></p>
+  </main>
+  <dialog class="world-dialog" id="worldEditor" aria-labelledby="editorTitle" aria-describedby="editorIntro">
+    <div class="editor">
+      <header class="editor__header"><div><p class="world__label">CREATE YOUR WORLD</p><h2 id="editorTitle">新建世界观</h2><p id="editorIntro">从一间咖啡馆到一整个宇宙，让故事有自己的天地。</p></div><button type="button" class="editor__close" id="closeWorldEditor" aria-label="关闭">×</button></header>
+      <div class="editor__notice" role="note">建议为角色配置记忆模型。常驻设定会占用每轮上下文，内容过多可能挤占对话空间并影响记忆表现；没有配置 Embedding 时，角色无法检索详细资料。若不配置，请不要填写目录和详细资料，必要内容只能放入常驻设定，并留意上述代价。</div>
+      <form id="worldForm">
+        <label class="editor__field" for="worldName"><span class="editor__field-title">世界名称</span><span class="editor__hint">给你的世界起一个容易辨认的名字。</span><input id="worldName" name="name" placeholder="例如：星月魔法学院" autocomplete="off"></label>
+        <section class="editor__section" aria-labelledby="coverTitle"><div class="editor__section-head"><span class="editor__number">✧</span><div><h3 id="coverTitle">世界背景</h3><span class="editor__badge">选填</span></div></div><p class="editor__help">选择图片、GIF 或视频作为世界卡片和详情页的背景。不添加也可以，届时会使用默认背景。</p><label class="editor__upload" for="worldCover">选择图片或视频</label><input id="worldCover" class="editor__sr" type="file" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,.mp4"><button type="button" id="removeWorldCover" class="editor__add" hidden>移除素材</button><p class="editor__footnote" id="worldCoverStatus" aria-live="polite">支持 PNG、JPEG、WebP、GIF、MP4，单个文件最大 10MB。</p><img class="editor__cover-preview" id="worldCoverPreview" alt="所选世界背景预览" hidden></section>
+        <section class="editor__section" aria-labelledby="coreTitle"><div class="editor__section-head"><span class="editor__number">01</span><div><h3 id="coreTitle">常驻世界设定</h3><span class="editor__badge">每次聊天都会生效</span></div></div><p class="editor__help">写下角色始终需要知道的世界背景、基本规律和绝不能忽略的限制。简短的世界观可以全部写在这里，不必刻意拆分。</p><p class="editor__example">例如：这是一个魔法与现代科技并存的世界；魔法需要学习，普通人不能直接使用高级魔法。</p><label class="editor__sr" for="worldCore">常驻世界设定</label><textarea id="worldCore" name="core" rows="6" placeholder="这个世界是什么样的？有哪些始终成立的规则？"></textarea><p class="editor__footnote">可参考 300～1500 字；这只是建议，不是限制。关系到剧情且不能遗漏的规则，请放在这里。</p></section>
+        <section class="editor__section" aria-labelledby="detailsTitle"><div class="editor__section-head"><span class="editor__number">02</span><div><h3 id="detailsTitle">详细世界资料</h3><span class="editor__badge">需要时查阅</span></div></div><p class="editor__help">将地理、历史、组织、文化或特殊物品等内容分成独立条目，每条写一个清晰的标题和正文。没有详细资料也可以留空。</p><p class="editor__example">例如：标题「皇家图书馆」；正文写明开放时间、借阅条件和只有贵族才能进入的区域。</p><div id="worldEntries"></div><button class="editor__add" type="button" id="addWorldEntry">＋ 添加资料条目</button><p class="editor__footnote">配置记忆模型的角色可按需查询详细资料，但查询不保证每次都触发；关键规则请同时写入常驻设定。</p></section>
+        <section class="editor__section" aria-labelledby="directoryTitle"><div class="editor__section-head"><span class="editor__number">03</span><div><h3 id="directoryTitle">资料目录</h3><span class="editor__badge">每次聊天都会参考</span></div></div><p class="editor__help">概括有哪些详细资料、各自涉及什么，让角色知道何时需要查阅。目录写主题线索即可，不用重复全部正文。</p><p class="editor__example">例如：学院历史；魔法分类与使用限制；皇家图书馆的进入与借阅规则。</p><label class="editor__sr" for="worldDirectory">资料目录</label><textarea id="worldDirectory" name="directory" rows="4" placeholder="列出详细资料的主题和查阅线索……"></textarea><p class="editor__footnote">模型会参考目录查阅资料；目录本身不能代替必须始终生效的规则。</p></section>
+        <footer class="editor__actions"><span id="worldFormStatus" role="status"></span><button type="button" class="editor__cancel" id="cancelWorldEditor">关闭</button><button type="submit" class="editor__save" id="saveWorld">保存世界观</button></footer>
+      </form>
+    </div>
+  </dialog>
+  <template id="worldEntryTemplate"><div class="editor-entry"><div class="editor-entry__top"><strong class="editor-entry__label">资料条目</strong><button type="button" class="editor-entry__remove">移除</button></div><label>标题<input type="text" class="editor-entry__title" placeholder="例如：皇家图书馆"></label><label>正文<textarea class="editor-entry__content" rows="4" placeholder="写下这条资料的具体内容……"></textarea></label></div></template>
+  <div class="world-wait" id="worldWait" role="status" aria-live="polite" hidden><div><span class="world-wait__spinner" aria-hidden="true"></span><h2>正在整理世界</h2><p>正在保存并为角色重建世界观资料，请稍候…</p></div></div>
+  <div class="world-toast" id="worldToast" role="status" aria-live="polite" hidden></div>
+  <script src="/static/js/world.js" defer></script>
+  <script src="/static/js/world-motion.js" defer></script>
+</body>
+</html>

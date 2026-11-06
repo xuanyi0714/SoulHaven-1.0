@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+  <title>SoulHaven</title>
+  <link rel="icon" href="/static/pictures/favicon.png">
+  <link rel="stylesheet" href="/static/css/chat.css">
+  <link rel="stylesheet" href="/static/css/state-reveal.css">
+  <link rel="stylesheet" href="/static/css/chat-theme.css">
+  <link rel="stylesheet" href="/static/css/chat-entrance.css">
+  <link rel="stylesheet" href="/static/css/role-entrance.css">
+  <link rel="stylesheet" href="/static/css/chat-mobile.css">
+  <script>
+    document.documentElement.classList.add("welcome-pending");
+    setTimeout(function () { document.documentElement.classList.remove("welcome-pending"); }, 8000);
+  </script>
+  <link id="welcomeImage" rel="preload" as="image" href="/static/pictures/seaside_tea.webp" media="(width > 720px)">
+  <link id="welcomeImageMobile" rel="preload" as="image" href="/static/pictures/seaside_tea_mobile.webp" media="(max-width: 720px)">
+  <link rel="stylesheet" href="/static/css/entrance-skip.css">
+  <script src="/static/js/skip-entrance.js" defer></script>
+  <script src="/static/js/media.js" defer></script>
+  <script src="/static/js/group-chat.js" defer></script>
+</head>
+<body>
+  
+
+  <div class="app" data-view="home">
+    <div class="welcome-backdrop" aria-hidden="true">
+      <video class="welcome-wallpaper" data-src="/static/videos/seaside_breeze.mp4?v=cloud-drift" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+    </div>
+    <aside class="sidebar" id="sidebar" data-view="home" aria-label="SoulHaven 侧边栏">
+      <div class="sidebar-starlight" aria-hidden="true"><i></i><i></i><i></i></div>
+      <header class="sidebar-header">
+        <div class="brand" id="brand">
+          <img class="brand-mark" src="/static/pictures/favicon.png" alt="灵栖 logo">
+          <span class="brand-name"><strong>灵栖</strong><small>SoulHaven</small></span>
+        </div>
+
+        <button
+          class="back-button"
+          id="backButton"
+          type="button"
+          title="返回角色列表"
+          aria-label="返回角色列表"
+          hidden
+        >
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 12H5"></path>
+            <path d="m12 19-7-7 7-7"></path>
+          </svg>
+          <span class="back-button__label">返回</span>
+        </button>
+
+        <button
+          class="icon-button"
+          id="sidebarToggle"
+          type="button"
+          title="收起侧边栏"
+          aria-label="收起侧边栏"
+          aria-expanded="true"
+          aria-controls="sidebarBody"
+        >
+          <svg class="icon icon--collapse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <path d="M9 3v18"></path>
+            <path d="m15.5 10-2 2 2 2"></path>
+          </svg>
+          <svg class="icon icon--expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <path d="M9 3v18"></path>
+            <path d="m13.5 10 2 2-2 2"></path>
+          </svg>
+        </button>
+      </header>
+
+      <div class="sidebar-body" id="sidebarBody">
+        <section class="view" id="rolesView" aria-label="角色列表">
+          <button class="primary-button" id="createRoleButton" type="button">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="8" r="4"></circle>
+              <path d="M3 21a6 6 0 0 1 12 0"></path>
+              <path d="M19 8v6"></path>
+              <path d="M16 11h6"></path>
+            </svg>
+            <span class="button-label">创建角色</span>
+          </button>
+
+          <div class="section-heading">角色</div>
+
+          <div class="list" id="roleList"></div>
+        </section>
+
+        <section class="view" id="sessionsView" aria-label="角色会话" hidden>
+          <button
+            class="primary-button primary-button--muted"
+            id="newSessionButton"
+            type="button"
+            disabled
+            title="新建会话维护中，暂不可用"
+          >
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 5v14"></path>
+              <path d="M5 12h14"></path>
+            </svg>
+            <span class="button-label">新建会话</span>
+            <span class="button-note">维护中，暂不可用</span>
+          </button>
+
+          <div class="role-strip">
+            <span class="avatar avatar--small" id="sessionRoleAvatar" aria-hidden="true">角</span>
+            <span class="role-strip__name" id="sessionRoleName">角色</span>
+          </div>
+
+          <div class="section-heading">会话</div>
+
+          <div class="session-list">
+            <div class="session-item is-active">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path>
+              </svg>
+              <span>默认对话</span>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer class="sidebar-footer">
+        <a href="#group-chat" data-group-chat title="角色群聊"><span aria-hidden="true">♧</span><span class="sidebar-footer__text">角色群聊</span></a>
+        <a href="/static/html/world.html" title="世界设定"><span aria-hidden="true">✧</span><span class="sidebar-footer__text">世界设定</span></a>
+        <a href="/characters.html" title="角色档案"><span aria-hidden="true">◇</span><span class="sidebar-footer__text">角色档案</span></a>
+        <a href="/" title="返回灵栖首页"><span aria-hidden="true">⌂</span><span class="sidebar-footer__text">灵栖首页</span></a>
+      </footer>
+    </aside>
+
+    <div class="chat-drawer-backdrop" id="chatDrawerBackdrop" aria-hidden="true" hidden></div>
+    <main class="main" id="chatMain">
+      <div class="chat-mobile-bar">
+        <button class="chat-mobile-button" id="mobileRoles" type="button" aria-controls="sidebar" aria-expanded="false">角色与会话</button>
+        <button class="chat-mobile-button" id="mobileMood" type="button" aria-controls="rightSidebar" aria-expanded="false">角色情绪</button>
+      </div>
+      <div class="welcome" id="welcomeView">
+        <div class="welcome-topline">
+          <a class="world-home" href="/" aria-label="返回灵栖首页"><span class="world-home__surface" aria-hidden="true"></span><span class="world-home__star" aria-hidden="true">✦<i class="world-home__spark world-home__spark--near">✦</i><i class="world-home__spark world-home__spark--far">✦</i></span><span class="world-home__words"><strong>灵栖</strong><small>属于你的小小世界</small></span><span class="world-home__arrow" aria-hidden="true">↗</span></a>
+          <a class="world-archive" href="/characters.html"><span aria-hidden="true">❋</span> 角色档案 <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="welcome-hero">
+          <div class="welcome-mark" id="welcomeMark" aria-hidden="true">✦</div>
+          <p class="welcome-eyebrow"><span aria-hidden="true">✦</span> 风起的日常 · 与你相遇</p>
+          <h1 class="welcome-title">
+            <span id="welcomeTitle">在这里，<br>遇见另一种日常。</span>
+            <svg class="welcome-title__ink" viewBox="0 0 544 172" aria-hidden="true" focusable="false">
+              <!-- Glyph outlines from Zhi Mang Xing (SIL OFL 1.1). -->
+              <g class="welcome-title__letters">
+                <g transform="translate(7 3) rotate(-4 32 32)">
+                  <mask id="welcome-ink-1" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.6" d="M7 16Q33 11 59 12"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="18.8" d="M35 3Q28 24 11 44L4 48"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M20 31Q18 48 20 67"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M28 39Q45 35 61 35"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.6" d="M45 28Q44 47 44 59"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M26 64Q44 59 65 59"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-1)" d="M52.4 6.1Q53.4 7.6 54.5 7.8Q56.5 8.5 54.7 9.8Q54 10.4 52.7 10.9Q51 11.5 49 13.3Q46.9 15.1 42.6 19.5Q36.1 26.2 34.6 28.5Q33.1 30.9 33.7 33.3Q34 34.2 34.2 34.7Q34.4 35.1 34.8 35.5Q35.1 35.8 36 35.5Q36.9 35.3 37.9 35Q39 34.7 41.2 33.9Q45.2 32.4 45.8 31.5Q46.4 30.6 44.9 28.6Q43.9 27.3 43.7 25.7Q43.5 24 44.3 23.2Q44.9 22.6 46.8 24.2Q50.3 27.7 52.1 28.9Q54 30.1 56 30.5Q59 31.2 59.9 32.5Q60.6 33.5 60.5 33.9Q60.4 34.3 59.7 35.2Q58.7 36.5 57.7 36.3Q54.3 35.6 53.7 38.9Q53.3 40.9 51.7 44.4Q50 47.9 50 48.2Q50 48.6 52.5 48.2Q55.5 47.8 59.5 49.4Q63.5 50.9 63.5 52.4Q63.5 53.1 61.4 54.2Q59.4 55.4 58.1 55.4Q56.5 55.4 54.2 54.9Q51.8 54.5 48 56.1Q44.3 57.5 39.6 58Q34.9 58.4 34.5 57.3Q33.7 55.1 32.9 57Q32.1 58.7 32.1 61.8Q32.1 63.7 31.5 65.1Q30.8 66.4 30.1 66.4Q29.2 66.4 27.8 64.2Q26.4 62 26.4 60.5Q26.4 58.7 27 57.2Q28.1 54.1 28.8 46.4Q29.5 38.7 28.7 38.1Q28.5 38 27.7 38.9Q26.8 39.9 25.8 41.4Q20 50.5 16.1 55.2Q12.2 59.8 8 62.6Q3.6 65.5 4.8 63.6Q5.6 62.3 8.9 58.8Q14.4 53.2 21.4 42.5Q28.4 31.8 27.9 29.9Q27.5 28.9 28.5 28.9Q29.2 28.9 30.9 26.6Q32.6 24.3 32.6 23.4Q32.6 23 35.1 20Q37.6 16.9 37.4 16.4Q36.8 15.5 29.9 19.9Q23.7 23.6 21.2 24.2Q18.6 24.8 15.7 22.9Q12.6 20.9 14.7 20.5Q14.9 20.4 15.4 20.4Q18.9 20.4 29.5 15.4L38.5 11.3Q41.6 9.9 43 8.6Q44.5 7.3 44.5 5.9Q44.5 4.5 44.9 3.9Q45.7 3.1 48.6 4Q51.4 4.9 52.4 6.1ZM35.5 40.6Q34.5 40.6 34.2 41.7Q33.9 42.8 33.5 47.3L33.2 50L36.9 50.5Q40.7 51 41 50.4Q41.3 49.9 42.8 47.9Q44 46.5 45.1 43.9Q46.3 41.2 45.9 40.9Q45.7 40.6 43.1 41.6Q41.3 42.3 40.7 42.3Q40 42.3 38.6 41.6Q36.7 40.6 35.5 40.6Z"/>
+                </g>
+                <g transform="translate(79 0) rotate(3 32 32)">
+                  <mask id="welcome-ink-2" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.3" d="M35 5Q41 9 43 14"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.6" d="M23 22Q43 17 65 18"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.6" d="M51 24Q45 41 25 50"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13" d="M34 28Q42 40 61 47"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M8 17Q14 21 16 27"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.3" d="M3 38Q12 35 18 36Q13 42 17 47Q19 51 12 56"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="17.2" d="M3 58Q11 51 23 57Q46 71 69 59"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-2)" d="M35 18Q36.2 18 39.4 18.7Q42.5 19.4 43.4 19.9Q45.5 20.9 45.3 22.5Q45.1 24.1 42.8 24.1Q41.8 24.1 37.7 25.6Q33.5 27.1 33.5 27.5Q33.5 27.8 35.8 30Q37.3 31.5 37.7 32.2Q38.1 33 38.1 34.3Q38.1 36.4 37.1 38.5Q36.1 40.6 36.1 40.7Q36.1 40.9 37.9 43.1Q39.6 45.3 39.6 46.1Q39.6 46.8 40.1 47.3Q40.7 48 40.2 48.8Q39.6 49.7 38.6 50.1Q37.6 50.5 36.5 50Q35.7 49.5 34.3 47.9Q33.5 46.9 32.9 46.8Q32.4 46.7 31.5 47.4Q30.5 48 28 50.2Q25.4 52.4 25.8 53Q26.3 53.5 31.5 53.5Q37 53.6 47.4 55.1Q59.6 56.8 64.1 56Q66.7 55.5 67 55.7Q67.2 56 65.5 57.8Q63.8 59.6 62.1 60.6Q59.9 62 58 62Q55.7 62 52.3 61.4Q49 60.8 47.1 60Q44.8 59 39.6 58.4Q34.4 57.9 28.3 57.9Q21.8 58.1 19.2 57.2Q16.6 56.4 14.3 57Q12.1 57.6 9 57.6Q7 57.6 6.4 57.4Q5.9 57.2 5.5 56.2Q4.9 54.7 5.1 53.6Q5.3 52.4 6.3 51Q7.2 49.6 7.3 49.1Q7.4 48.6 6.9 47.4Q4.8 42.9 5.3 40.1Q5.5 38.8 5.4 38.4Q5.2 38 4.6 37.8Q3.8 37.6 2.4 36.1Q1 34.7 1 34.1Q1.1 33.8 2.1 33.8Q3.1 33.8 4.5 34.1Q6 34.5 6.8 34.8Q8.4 35.5 9.2 35.5Q10.6 35.5 10.9 37.3Q11.2 39.1 10.3 41.8L9.6 43.8L12.3 46.3Q14.3 48.1 14.7 48.7Q15.1 49.4 14.9 50.5Q14.6 52.1 15 52.3Q15.8 52.8 18.9 50.9Q22.1 49 24.7 46.4Q29.8 41.5 28.1 41.5Q27.5 41.5 25.8 39.9Q24.7 38.8 24.4 38.1Q24 37.4 24 36.2Q24.1 34.9 24.5 34.9Q24.8 35.5 28 36.5Q30.8 37.5 31.4 37.1Q32 36.6 32 33.8Q32 30.8 31.6 29.9Q31.3 29 30.1 29.3Q28.9 29.7 28.1 30.4Q27.3 31 25 32Q22.9 33 21.6 32.6Q20.4 32.2 18.9 30.4Q16.7 27.6 18.2 27.6Q19.3 27.6 23.9 25Q28.5 22.5 32 20Q34.8 18 35 18ZM4.3 15.1Q5 15.1 7.8 16.9Q10.7 18.7 11.1 19.4Q11.6 20.4 11.1 21.7Q10.7 23 9.8 23Q8.6 23 6.8 21.8Q5 20.6 4.9 19.6L4.3 16.6Q3.9 15.1 4.3 15.1ZM32.7 11.8Q36.4 14.3 33.1 17.6Q32.2 18.5 31.6 18.7Q31.1 18.9 30.2 18.7Q28.9 18.4 27.8 17.4Q27 16.8 26.9 16.4Q26.8 16 27.3 15.4Q28.9 13.1 26 10.4Q24.5 9 24.8 8.5Q25.1 8 25.9 8Q26.6 8 28.1 8.9Q29.6 9.7 29.6 10.1Q29.6 10.5 30.2 10.5Q30.8 10.5 32.7 11.8Z"/>
+                </g>
+                <g transform="translate(154 4) rotate(-3 32 32)">
+                  <mask id="welcome-ink-3" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.6" d="M14 7Q16 22 15 34"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.6" d="M15 9Q33 5 54 6Q56 13 52 33"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.3" d="M17 21Q35 17 51 18"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.3" d="M16 34Q32 31 51 31"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.9" d="M34 8Q34 34 32 60"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.9" d="M14 47Q33 43 54 43"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="18.5" d="M7 63Q35 57 64 57"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-3)" d="M46.9 5.4Q48.8 6.2 49.3 6.8Q49.9 7.4 49.9 8.4Q50.2 11.9 49 14.4Q48.3 16.1 47.6 18.6Q46.5 22.8 43.3 27.2Q40.1 31.5 37.2 32.4Q36 32.8 35.4 33.3Q34.9 33.7 34.8 34.5Q34.7 35.8 35 35.9Q35.4 36 37.9 35.4Q40.1 34.9 42.4 35.5Q44.7 36 45 37Q45.4 37.9 43.6 39.8Q41.8 41.7 39.5 43.2Q34.2 46.6 34.2 48.9Q34.2 51.2 35.1 51.5Q36.1 51.8 40.8 51.3Q46.5 50.5 46.8 50Q47.1 49.5 46 48.9Q44.8 48.3 44.8 47.6Q44.8 47.1 45.2 47.1Q45.6 47.1 46.9 47.6Q49 48.3 50.4 48.3Q51.5 48.5 55.2 50.6Q58.9 52.7 58.9 53.4Q58.9 54.4 57.7 55Q56.5 55.7 55.2 55.4Q53.5 55 52.9 55Q45.6 55.1 38.9 55.6Q32.2 56.1 30.7 56.7Q28 57.4 23.4 60.5Q18.7 63.6 17.4 64Q16 64.3 14.5 65Q11.4 66.6 10.1 65Q9.5 64.3 9.2 61.8Q8.9 59.3 9.3 58.7Q9.7 58.1 12.4 57.7Q14.6 57.6 17.4 55.9Q20.2 54.2 22.8 51.7Q28 46.3 27.4 45.5Q27 44.9 24.2 45.4Q21.5 45.6 20.7 45.2Q19.8 44.8 19.3 43Q18.9 41.7 19.6 41.4Q24.4 40.1 25.6 39.6Q26.9 39 27 38.1Q27.6 36.3 27.1 35.9Q26.6 35.5 24.1 35.5Q21.9 35.5 21.3 35.3Q20.7 35 20.4 34.1Q20.1 32.6 18.8 32.3Q17.4 32 17.1 31Q16.7 30.1 14.7 26.9Q12.8 23.6 12.8 21.1V18.5L14.6 19.7Q16.4 20.9 18 21.6Q19.6 22.2 19.8 23.4Q20.5 25.3 25.7 22.1Q27.5 21 27.9 20.4Q28.3 19.8 28.4 18.1Q28.6 15.6 27.9 15.1Q27.3 14.7 25.7 16.1Q23.9 17.5 21.5 17.5Q17.8 17.5 17 14.9Q16.9 14 17 13.8Q17.2 13.6 18.1 13.6Q19.6 13.6 22 12.7Q24.5 11.7 29.9 9.1Q36.7 5.8 39 4.9Q41.4 4.1 42.9 4.2Q44.5 4.3 46.9 5.4ZM32.8 10.4Q31.5 11.4 31.5 11.9Q31.5 12.5 32.8 13.1Q34.2 13.8 35.1 15.4Q36.5 18.1 40.1 18.1Q41 18.1 41.5 17.6Q42 17.1 42.6 15.7Q44.8 10.3 43.7 8.9Q42.9 7.8 39 8.4Q35.1 8.9 32.8 10.4ZM38.7 22.1H37Q35.9 22.1 35.5 22.4Q35.1 22.8 34.8 24.4Q34.2 26.7 34.5 27Q34.7 27.2 35.2 26.7Q35.8 26.3 36.5 25.5Q37.2 24.7 37.7 23.7ZM26 28.1Q25.4 28.8 25.4 29.1Q25.5 29.4 26.3 30.1Q27.4 31.2 27.6 30.4Q27.9 29.6 27.8 28.6Q27.6 27.5 27.2 27.4Q26.9 27.3 26 28.1Z"/>
+                </g>
+                <g transform="translate(226 5)">
+                  <mask id="welcome-ink-4" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.6" d="M11 53Q17 53 16 58Q15 63 10 66"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-4)" d="M12.9 47.4Q12.9 47 13.2 47Q15.5 47 17 49.7Q18.6 52.4 18.6 53.9Q18.6 55.5 18.3 56.9Q18 58.3 16.2 62.6Q14.4 67 13.5 67Q12.5 67 12 64.8Q11.4 62.5 11.4 60.3Q11.4 58.1 11.9 55.9Q12.3 53.8 12.6 52.4Q13.2 50.1 13.2 49.2Z"/>
+                </g>
+                <g transform="translate(3 86) rotate(-2 32 32)">
+                  <mask id="welcome-ink-5" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.3" d="M24 6Q27 19 26 30"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M25 8Q41 4 59 6Q60 15 57 28"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12" d="M27 18L56 16"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12" d="M27 28Q40 25 57 26"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13" d="M42 7Q41 27 41 49"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12.3" d="M21 37Q22 47 21 57"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.3" d="M22 37Q41 32 62 34Q63 47 59 55Q57 56 52 51"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12.7" d="M28 50Q39 47 48 44"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12" d="M47 41L52 48"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M4 20Q9 23 12 28"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14" d="M2 39Q9 35 14 37Q9 43 13 46Q17 52 10 56"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M2 58Q10 54 18 58Q45 72 68 59"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-5)" d="M7.1 24.6Q9.7 25.5 10.1 25.9Q10.6 26.4 10.8 27.7L10.9 29.5L8.6 29.2Q6.1 28.9 5.2 28.8Q4.3 28.7 3.8 26.9Q3.2 25.2 2.1 25.1Q1 24.9 1 23.9Q1 23.5 1.3 23.3Q1.5 23 2.2 23.1Q2.9 23.2 4 23.5Q5.2 23.8 7.1 24.6ZM46.1 9.8Q46.7 10.8 46.8 11.4Q46.9 12.1 46.4 14.2Q45.9 16.5 44.7 19Q43.5 21.5 42.9 21.5Q42.4 21.5 41 24.3Q40.1 26.2 39.6 26.7Q39 27.2 38 27.4Q36.4 27.5 36.4 27.9Q36.4 28.2 35.2 29.7Q33.5 31.8 34.2 31.8Q34.9 31.8 38.7 30.1Q44 27.9 48.6 28.8Q53.2 29.7 54.1 33.2Q54.4 34.5 53.5 40.4Q52.9 44.1 52.4 46.1Q51.8 48.1 50.5 51.1Q48.3 55.7 48.3 56Q48.3 56.8 58.8 57.5Q66.7 57.9 66.9 58.3Q67.2 58.5 66.6 59.2Q66 59.9 64.7 60.8Q63.5 61.6 62.2 62.3Q59.7 63.5 56.6 63.6Q53.5 63.7 50.8 62.7Q46.8 61.2 40.4 60Q38.7 59.6 32.8 59.6Q26.9 59.6 21.5 60.1Q20.2 60.1 17 59.7Q13.7 59.3 12.5 58.9Q10.9 58.4 10.1 57.7Q9.4 57 9.4 55.3Q9.4 53.7 10.1 52.9Q10.9 51.9 10.8 51Q10.6 50.2 9.4 48.7Q8 46.8 7.3 45.4Q6.7 43.9 4.5 41.5Q1.9 38.2 2.8 38.2Q3.6 38.2 8.2 40.4L12.8 42.6V45.1Q12.8 46.7 13.1 47.2Q13.3 47.8 14.3 48.5Q15.6 49.5 15.7 50.3Q15.8 51.2 15 54.2L14.7 55.6L21.3 55.2Q27.9 54.7 33.9 54.7Q38.3 54.7 39.1 54.6Q40 54.5 40 53.7Q40 52.7 38.7 51.4Q38 50.6 37.5 50.4Q37 50.3 36.2 50.6Q34.8 51.1 34.3 51.5Q33.8 51.9 32.7 52.2Q31.5 52.6 31.5 51.9Q31.5 51.1 30.7 49.5Q29.7 47.9 29.4 46.3Q29.1 44.7 29.6 44.4Q29.8 44.2 30 43.4Q30.2 42.6 30.1 41.9Q30.1 41.3 29.8 41.3Q29.5 41.3 26.5 43.1Q23.5 44.9 23.4 45.2Q23 45.9 23.6 46.8Q24.2 47.7 25.5 48.3Q27.4 49 28.1 49.8Q28.5 50.3 28.5 50.6Q28.4 50.9 27.7 51.7Q27.1 52.4 26.5 52.4Q25.9 52.5 24 52.1Q22.1 51.7 21.4 51.2Q20.7 50.8 19.7 49.5Q18.3 47.5 18 45.5Q17.7 43.4 17.5 42.6Q17.2 41.8 17.9 41.8Q18.6 41.8 19 40.2Q19.2 39.3 19.4 39.1Q19.7 38.8 20.2 39Q21.6 39.7 22.6 39.4Q23.7 39 26.4 37.2Q29.7 34.9 30.3 34.4Q30.9 33.8 30.9 32.7Q30.8 31.9 30.4 31.8Q29.9 31.6 27.7 31.8Q25.1 31.9 24.1 31.4Q23.2 30.8 23.2 29.2Q23.2 27.7 21.6 25.2Q19.9 22.8 19.4 19.3Q19 16.6 19.2 15.6Q19.4 14.6 20.5 14.6Q21.3 14.6 24.7 12.5Q28.2 10.4 32.7 8.4Q37.2 6.3 39.2 6.4Q41.2 6.5 43.1 7.5Q45.1 8.4 46.1 9.8ZM38.4 11.2Q36.7 11.2 34.8 11.9Q33 12.5 28.8 14.6Q24.7 16.7 23.5 17.6Q22.8 18.2 22.8 18.5Q22.8 18.7 23.5 19.7Q24.3 20.8 25.2 20.9Q26.1 21 27.9 20.2Q29.1 19.6 29.3 19.2Q29.5 18.8 29.2 17.7Q29.1 16.4 29.4 16.1Q29.7 15.8 30.5 16.7Q31 17.4 34.8 17.3Q37.4 17.3 38.1 17.1Q38.7 16.9 39.2 16.1Q39.8 14.8 40 13Q40 11.7 39.8 11.4Q39.5 11.2 38.4 11.2ZM36.7 20Q36 20 35.7 20.7Q35.4 21.4 35.6 22Q35.8 22.6 36.7 21.3Q36.9 20.9 37.1 20.6Q37.2 20.4 37.2 20.3Q37.2 20.2 37.1 20.1Q36.9 20 36.7 20ZM26.3 23Q25.7 23.6 26.8 24.8Q27.9 25.9 29.2 25.9Q30 25.9 30.3 25.6Q30.6 25.3 30.7 24.4Q30.9 23 30.7 22.7Q30.3 22.4 28.5 22.5Q26.7 22.6 26.3 23ZM47.5 32.5 45.4 32.5Q43.1 32.4 41.2 33.1Q39.2 33.7 36.8 35.4Q34.7 36.9 34.4 37.6Q34 38.2 34.3 40Q34.6 41 34.9 41.2Q35.2 41.4 36.4 41.3Q38.2 41.1 39.6 41.7Q40.5 42 40.7 42.5Q40.9 43 40.9 44.6Q40.9 46.8 39.8 48Q39.2 48.7 39.1 49Q39.1 49.4 39.5 50Q40.2 50.8 41.7 50.8Q42.6 50.8 43.1 50.4Q43.6 50 44.5 48.4Q45.7 46.2 46.5 42.7Q47.3 39.2 47.5 35.8Z"/>
+                </g>
+                <g transform="translate(78 86) rotate(2 32 32)">
+                  <mask id="welcome-ink-6" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M15 9Q17 26 16 39"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M16 11Q36 5 55 8Q56 23 52 39"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="17.6" d="M36 18Q35 45 22 56Q15 63 6 65"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.9" d="M42 41Q40 53 42 59Q46 64 61 61Q66 60 67 49"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-6)" d="M34.1 45.1Q35.6 48.2 33.8 51.9Q32.6 53.9 32.9 54.8Q33.5 56.2 40.8 56.1Q48.1 56.1 52.7 54.6Q55.8 53.7 56.8 52.1Q57.8 50.5 57.5 47.1Q57.1 43.9 57.7 43.9Q58.4 43.9 60.4 46Q62.4 48.1 62.4 48.9Q62.4 49.8 63.4 52.9Q64.5 56.1 64 57.5Q63.4 58.9 60.7 60.3Q57.4 61.9 53.7 62.3Q50.1 62.8 42.5 62.8Q36.8 62.7 34.5 62.4Q32.3 62.1 30.9 61.2Q29.6 60.3 28.1 58Q25.4 53.7 27.4 49.1Q28.2 47 28.2 44Q28.3 41.1 28.8 41.1Q29.7 41.1 31.6 42.5Q33.5 43.9 34.1 45.1ZM40.2 7.8Q42 10 41.8 17.8Q41.5 25.6 39.4 29.7Q38.9 30.7 38.2 35.6L37.5 40.5H35.8Q34.2 40.5 32.6 38.8Q31 37 29.7 37.3Q27.7 37.5 18.8 50.5Q16.1 54.3 11.2 58.9Q6.2 63.5 4.7 63.5Q2.9 63.5 4.8 61.1Q5.6 59.9 7.1 58.7Q10.9 55.4 16.3 47.7Q21.8 40 26.1 32Q27.9 28.7 28.2 27.4Q28.6 26.1 28.4 24.3Q28.3 23.4 28.3 22.8Q28.3 22.2 28.3 21.8Q28.3 21.5 28.4 21.5Q29.1 21.5 30.4 22.3Q31.6 23.2 32 24Q32.7 25.4 33.2 25.4Q33.6 25.4 34.3 22.4Q34.9 19.3 35.2 16Q35.5 13.3 35.4 12.9Q35.2 12.4 34.3 12.8Q32.2 13.4 30.8 15Q29.4 16.5 28 19.7Q26.2 23.8 24.9 25.9Q23.6 28.1 21.9 29.5Q20.6 30.6 20.4 31.2Q20.1 31.9 20.4 34.1Q20.6 37 19.8 37.4Q18.4 38 17.5 37.3Q16.5 36.6 14.7 34Q13.1 31.4 12.8 30.6Q12.5 29.8 12.9 28.5Q13.7 26.3 13.7 18.1Q13.7 9.8 13 8.6Q12.4 7.6 12.6 7.4Q12.9 7.3 14.4 7.6Q16.6 7.9 17.9 9.3Q18.7 10.3 19.5 13.6Q20.3 16.8 20.3 19.3Q20.3 21.6 21.5 20.2Q22 19.7 22.9 18.5Q24.4 16.3 28.6 12Q32.9 7.6 33.9 6.9Q35.1 6.4 37.3 6.6Q39.6 6.9 40.2 7.8Z"/>
+                </g>
+                <g transform="translate(147 84) rotate(-3 32 32)">
+                  <mask id="welcome-ink-7" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M17 8Q19 19 18 30"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.3" d="M18 10Q34 5 51 6Q52 15 48 26"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M20 29Q33 25 48 25"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M9 41Q34 34 59 34Q60 52 53 64Q51 66 44 59"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="17.9" d="M34 32Q28 55 12 66"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-7)" d="M43.5 5.8Q45.4 6.6 45.7 7Q46 7.4 45.8 8.8Q45.4 10.6 43.5 13.7Q41.6 16.9 41.6 17.4Q41.6 17.9 43.8 18.8Q45.4 19.5 45.8 20.2Q46.1 20.9 45.3 21.6Q44.5 22.3 42.4 23.1Q39 24.7 37.9 25.3Q37.1 25.7 37.2 26.1Q37.3 26.4 38.6 27.7L40.4 29.4L43.9 28.5Q46.8 27.7 50.9 27.8Q54.9 27.9 55.7 28.8Q56.4 29.3 57.3 29.3Q59.4 29.3 60 33.1Q60.5 36.9 59.4 42.4Q58.3 46.9 57.1 49.5Q55.9 52 53.1 55.5Q48.6 60.7 45.9 62.7Q43.2 64.6 39.7 65.1Q36.9 65.4 35.2 64.3Q33.4 63.1 31.7 59.9Q29.9 56.4 29.6 55.7Q29.3 54.9 26 58Q20.2 63.7 20.4 62Q20.4 61 23.1 57.2Q26.5 52.8 27.9 50.2Q29.2 47.7 29.2 45.8Q29.2 43.7 29.8 42.8Q30.3 42.1 30.3 43.2Q30.4 43.5 30.4 43.8Q30.4 44.5 30.4 44.8Q30.4 45.2 30.4 45.3Q30.5 45.5 30.7 45.4Q30.9 45.2 31.2 45Q31.8 44.5 33.3 41.9Q34.8 39.3 34.8 38.7Q34.8 37.3 30.3 39.9Q29.4 40.5 28.5 41.1Q21.2 46.1 16 47.9Q10.8 49.8 9 48.2Q7.8 47.1 7.8 46.5Q7.9 45.9 12.8 43.5Q17.7 41.1 20.5 39.5Q23.3 37.9 24.7 37L31.3 33.8L36.6 31.1L35.5 29.6Q33.4 26.6 28.1 30.2Q25.3 32.2 24.7 32.2Q24.4 32.2 24.2 31.9Q24 31.6 24.1 31.3Q24.2 31.1 24.6 31.1Q24.9 31.1 27.2 28.9L29.3 27L26.9 24.9Q25.4 23.5 25 22.6Q24.5 21.8 24.3 19.7Q24.2 18.3 24.2 16.7Q24.3 15.2 24.6 13.7Q24.9 12.1 25.3 10.9Q25.6 9.7 26.1 8.9Q26.6 8.2 26.9 8.4Q28.1 8.8 29.6 8.5Q31.2 8.1 34.3 6.7Q38 5 39.5 4.9Q40.9 4.7 43.5 5.8ZM34.5 12.6Q33.7 12.5 31.7 12.5H28L28.3 14.1Q29.4 18.7 30.6 18.7Q31 18.7 32.5 16.9Q34 15.1 35 13.2Q35.3 12.9 34.5 12.6ZM50 32.7 48.5 32.9Q46.2 32.9 45.1 33.4Q44.1 33.9 43.6 35.2Q43.1 37 40.2 40Q37.2 43.1 34.6 47.5L31.8 51.8L33.1 53.8Q35.4 57.6 39.1 55.5Q42.8 53.4 46.6 45.9Q49.3 40.2 49.7 36.5Z"/>
+                </g>
+                <g transform="translate(216 86) rotate(-4 32 32)">
+                  <mask id="welcome-ink-8" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="19.5" d="M4 36Q28 33 46 26Q56 22 65 22"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-8)" d="M59.6 23.6Q62.2 24.7 62.8 25.1Q63.3 25.6 63.5 27Q63.7 27.8 63.3 28.2Q62.8 28.6 61.2 29.2Q58.9 29.8 55.4 30Q51.9 30.2 51.5 29.7Q51 28.8 44.3 29.4Q37.5 30.1 34.2 31.1Q32.3 31.8 30.2 33.1Q28.1 34.4 27.6 34.4Q27.2 34.4 25.6 35.2Q23.4 36.4 19.3 37.9Q15.2 39.3 14.4 39.3Q13.3 39.3 8.9 36.6Q4.5 33.9 4.5 33.3Q4.5 32.7 5.8 32.4Q7.1 32.1 8.6 32.4Q11.8 32.9 23.9 29.1Q27.7 27.8 32.8 26.9Q44.5 24.7 51.9 23.2Q54.6 22.6 55.9 22.7Q57.1 22.8 59.6 23.6Z"/>
+                </g>
+                <g transform="translate(288 86) rotate(2 32 32)">
+                  <mask id="welcome-ink-9" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M28 5Q21 10 7 13"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M3 27Q14 24 30 23"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="15.3" d="M18 11Q16 42 17 67"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M17 26Q12 42 2 50"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12.3" d="M19 31Q24 34 28 41"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M34 19Q37 32 35 43"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.3" d="M35 21Q49 17 65 18Q65 27 61 38"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12.7" d="M36 42Q50 38 62 38"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.6" d="M50 4Q47 31 48 65"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-9)" d="M22.8 17.3Q23.9 17.4 25.9 19.3Q29.4 22.5 29.2 28.5Q29.2 31.3 29.2 31.8Q29.2 32.3 31.3 30.3L33.4 28.2V29.7Q33.4 31.2 31.6 35L28.8 40.2Q28.2 41.2 28.3 43.5Q28.3 45.7 29 51.1Q29.4 53.5 28.8 56.4Q28.2 59.3 27.2 59.8Q26.5 60 21.7 57.9Q16.9 55.8 14.7 54.2Q12.6 52.8 11.5 51.5Q7.1 46.3 8.5 46.3Q9.1 46.3 12.4 49.3L15.8 52.3L15.9 50.6Q16.2 49 15.2 47.3Q13.4 43.5 15.6 42.9Q16.8 42.6 19.6 37Q22.4 31.5 22.2 31.2Q21.5 30.5 16.5 34.9Q13.7 37.3 11.8 38.2Q9.9 39 9.1 39.5Q8.3 39.9 5.6 39.2Q2.8 38.5 2.8 37.9Q2.8 37.4 3.4 37.4Q4.5 37.4 7.9 35.5Q11.3 33.5 15.6 30.6Q21.5 26.6 23.1 26.5H24.7L24.6 23.1Q24.5 19.8 23.3 18.6Q22.1 17.2 22.8 17.3ZM22.5 47.1Q21.9 47.9 21.1 49.1L19.2 51.9L20.5 52.3Q21.7 52.7 23 52.2Q24 51.8 24.2 51.3Q24.5 50.8 24.5 49Q24.5 45 22.5 47.1ZM52 3.4 54.1 4.9 53.7 10.2Q53 18.1 53.7 18.8Q54 19.1 56.2 18Q57.9 17.1 58.6 17.1Q59.3 17 60.8 17.6Q64.1 18.7 64.8 19.3Q65.4 19.8 65 21Q64.4 22.3 62.5 24.7Q57.4 31.5 59.4 32.1Q60.1 32.1 61.3 33.2Q62.4 34.4 62.2 34.8Q61.9 35.2 59.4 35.8Q56.4 36.5 52.9 39Q52.2 39.5 51.5 46.5Q50.9 53.6 51 59.7Q51.2 65.9 51 67Q50.9 68.2 50 68.7Q47.8 69.6 47.3 68Q46.7 65.9 47.2 54.1Q47.7 43 47.5 42.8Q47.3 42.6 44.6 43.2Q42.5 43.7 40.9 43.3Q39.3 42.9 39.3 41.9Q39.3 41.1 37.1 39.7Q35.3 38.4 34.7 37Q34.2 35.6 34.3 32Q34.3 27.8 35.1 27.7Q36 27.6 38.2 31.7Q39 33.5 39.8 34.1Q40.5 34.7 42.2 35.3L44.7 36.3L46.5 34.6Q47.7 33.4 48 32.8Q48.2 32.2 48.1 30.4Q47.8 27.9 47.5 27.6Q47.1 27.2 45 28.6Q42.9 30 42.1 30Q41.4 30 40.1 27.9Q38.9 25.8 39.5 25.8Q40.4 25.8 43.7 24.2Q47 22.6 47.5 22Q48.1 21.3 48.6 13.6Q49 6 48.7 5.1Q48.2 4.2 48.2 3.1Q48.2 0.8 52 3.4ZM54.4 22.8Q53.4 23.2 52.4 25Q51.3 26.7 51.3 28.2V29.6L52.6 28.5Q54 27.2 55.4 25.1Q56.5 23.5 56.3 22.8Q56 22.1 54.4 22.8ZM28.4 2Q29.2 2.8 29.2 3.3Q29.2 3.8 28.6 5.4Q27.6 8 24.8 11.9Q21.9 15.7 20.9 15.8Q20 15.8 19.7 15.1Q19.5 14.4 20.3 13.9Q20.7 13.7 21.5 12.2L24.1 7.2Q26 3.7 26 2.3Q26 1 26.7 1Q27.4 1 28.4 2Z"/>
+                </g>
+                <g transform="translate(363 86) rotate(-3 32 32)">
+                  <mask id="welcome-ink-10" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="18.2" d="M16 8Q17 32 16 60"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="17.6" d="M16 12Q34 7 52 9Q53 33 50 59"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.3" d="M18 34Q33 30 50 30"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.6" d="M18 59Q35 55 50 55"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-10)" d="M48.6 15.6Q50 16.8 50.2 17.6Q50.5 18.4 50.4 21.2Q50.3 25.4 49.7 29.6Q49.1 33.7 48.8 40.5Q48.6 50 47.6 53.3Q46.6 56.6 44 56.6Q42.5 56.6 40.7 55.7Q38.9 54.8 37.5 53.6Q36.6 52.8 36 52.8Q35.4 52.8 33.3 53.5Q30.4 54.4 27 55.7Q25.2 56.7 24.1 56.9Q23 57.1 22 56.7Q21.1 56.4 20.6 55.5Q20.2 54.7 19.8 52.6Q19.5 50.4 19.3 47.8Q19.1 45.3 19 40.8Q18.9 28.7 18.3 26.7L17.7 24Q17.2 22 21.9 24.6Q24.1 25.8 25.1 27.4Q26 29 26.1 31.9Q26.1 33.3 26.4 33.8Q26.7 34.3 27.5 34.8Q28.4 35.2 29.2 35Q30 34.8 31.7 34.1Q34.3 32.9 35.8 33Q36.7 33.1 36.9 32.5Q37.2 31.8 37.3 27.9Q37.7 22.6 37.5 22.3Q37.3 22 34.6 23.4Q31.7 24.8 30.2 25.2Q28.6 25.5 27.6 24.9Q24 23.4 27.7 21.8Q30.8 20.5 37 14.8Q39.3 12.8 40.2 13.1Q41 13.4 43.9 13.7Q46.8 14 48.6 15.6ZM36.1 39.1Q34.8 39.1 31.8 40.5Q30.4 41.2 29.7 41.4Q29 41.7 28.5 41.8Q28 41.9 27.9 41.7Q27.8 41.6 27.8 41.1Q27.8 40.3 27 40.3Q25.8 40.3 27.2 46.2Q27.6 47.5 28.4 47.7Q29.1 47.9 33.3 47.2Q35.9 46.8 36.6 45.8Q37.3 44.8 37.3 41.6Q37.3 39.9 37.1 39.5Q36.8 39.1 36.1 39.1Z"/>
+                </g>
+                <g transform="translate(431 85) rotate(2 32 32)">
+                  <mask id="welcome-ink-11" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.3" d="M33 3L32 17"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.3" d="M17 7L22 14"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.3" d="M50 6Q46 11 42 14"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.3" d="M11 18Q10 24 7 30"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14.9" d="M11 20Q36 15 61 16Q62 18 56 24"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12.3" d="M22 27L23 40"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12.3" d="M22 29Q35 25 47 26L45 37"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12" d="M24 39Q34 36 45 37"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="13.7" d="M15 46Q17 53 16 61"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="14" d="M16 48Q36 43 54 44Q56 57 51 60Q48 61 45 56"/>
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="16.2" d="M34 40Q33 54 33 68"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-11)" d="M33.9 2.4Q36.8 4 38.3 5.8Q39.1 6.7 39.6 6.8Q40.2 6.9 42 6.5Q44.7 5.9 47 6.6Q48.6 7.1 49.7 7.9Q50.9 8.7 50.9 9.3Q50.9 9.8 48 12.7Q45.1 15.6 43.6 16.6Q40.8 18.2 39.9 19.7Q39.7 20 40 20Q40.1 20 40.2 19.9Q46.4 17.5 48.5 16.5Q49.5 16.1 51.8 16.7Q54.2 17.4 55.8 18.5Q57.4 19.7 56.9 20.5Q56.3 21.5 51.2 24.8Q46.1 28.1 43 29.7Q38.7 31.8 38.3 32.3Q38 32.9 38.3 32.9Q38.6 32.9 41.5 31.8Q44.7 30.7 46.3 31.2Q50.4 32.3 50.4 33.7Q50.4 34.2 46.8 37.9Q43.2 41.6 39.4 44.9Q37 47 37.5 47.6Q37.9 47.9 39.7 46.7Q41.6 45.3 44.8 43.6Q48 41.9 49.4 41.7Q50.9 41.3 51.5 41Q52 40.7 55.5 41.9Q59 43.1 59.9 44Q60.9 44.9 61.5 46.7Q62 48 61.8 49Q61.7 49.9 60.3 52.6Q59.3 54.9 58.1 56.4Q56.9 58 54.6 60.1Q50.6 63.7 49.2 63.9Q47.8 64.1 47.9 64.6Q48 65.2 47.3 66.7Q46.6 67.9 45.1 68.5Q43.6 69 40.6 69Q38.8 69 38.4 68.9Q37.9 68.8 37.9 68.2Q38.5 66.1 38.4 65.1Q38.3 64.1 37.5 62.5Q36.1 60 36.5 59.1Q36.8 58.3 38.2 58.2Q39.5 58 39.9 58.7Q40.2 59.3 43 58.9Q45.7 58.5 47.1 57.6Q49.3 56.3 52.1 52.1Q54.8 47.9 54 47Q53.1 46.2 49.4 47.5Q45.8 48.9 42.6 51.3Q31.2 60.1 28.3 61.8Q25.5 63.6 24.2 62.7Q23.5 62.3 22.9 60.9Q22.3 59.4 22.3 58Q22.3 56.7 22.6 56.2Q22.9 55.7 23.8 55.3Q25 54.8 26.7 53.3Q28.5 51.8 28.5 51.2Q28.5 50.5 33.2 45.1Q34.6 43.6 34.6 42.8Q34.6 42 35.5 41.7Q36.3 41.3 36.3 40.9Q36.3 40.7 36 40.7Q35.7 40.7 35.1 40.8Q34.5 41 33.8 41.3Q31.6 42 30.5 41.6Q29.4 41.2 28.9 39.2Q28.5 37.7 29 36.7Q29.5 35.7 30.7 35.7Q31.7 35.7 32.7 34.6Q33.7 33.5 34 33.5Q34.3 33.5 37.7 30.4Q41 27.3 41.7 27.3Q42.4 27.3 43.3 25.7Q44.2 24.1 44.9 23.8Q45.6 23.6 45.2 23.2Q44.8 22.8 43.8 23.1Q42.7 23.5 42.4 23.5Q42.1 23.5 40.8 24.5Q39.4 25.5 37.9 26.1Q35.8 26.9 32.8 29.4Q29.8 31.8 28 34.1L22.8 39.9Q20 42.9 20 43.3Q20 43.7 17.4 46.7L12.9 51.7Q11.1 53.7 9.9 53.5Q8.7 53.3 7.4 50.9Q6.1 48.3 6.1 47.6Q6.1 46.9 8.2 44.7Q10.3 42.6 11.8 40.6Q13.4 38.6 19 33.7Q24.7 28.8 29.1 24.6Q32.3 21.5 32.8 20.7Q33.3 19.9 32.9 19Q32.1 17.5 29.9 17.4Q27 17.2 25.9 16.7Q24.9 16.2 24 14.8Q22.8 12.9 23 12.3Q23.1 11.8 25 12Q27.2 12.3 29.8 11.1Q31.6 10.4 32 9.9Q32.4 9.3 32.4 7.9Q32.4 5.8 31.3 4Q30.2 2.1 30.2 1.5Q30.2 0.2 33.9 2.4ZM33.7 23.7Q32.6 24.3 30.1 26.1Q26.7 28.4 19.5 35.3Q12.3 42.2 12.3 43.1Q12.3 43.6 12.9 43.2Q13.7 42.6 17.3 39.6Q20.9 36.5 23.6 33.8Q27.5 30.2 31.1 27.1Q34.8 24 35.2 24Q35.7 24 35.7 23.4Q35.7 22.4 33.7 23.7Z"/>
+                </g>
+                <g transform="translate(505 86)">
+                  <mask id="welcome-ink-12" maskUnits="userSpaceOnUse" x="-9" y="-9" width="88" height="88">
+                    <path class="welcome-title__stroke" pathLength="1" stroke-width="12" d="M17 55C24 53 25 61 19 64C11 66 11 57 17 55"/>
+                    <rect class="welcome-title__mask-fill" x="-9" y="-9" width="88" height="88" fill="white"/>
+                  </mask>
+                  <path mask="url(#welcome-ink-12)" d="M23.4 58.3Q23.4 59.9 22.3 62Q21.7 63.1 20.4 63.8Q19.2 64.5 17.6 64.5Q15.1 64.5 13.8 62.6Q12.6 60.7 12.6 58.9Q12.6 55.6 16.6 54V54Q16.6 53.5 19.1 53.5Q20.9 53.5 22.1 54.9Q23.4 56.3 23.4 58.3ZM15.4 58.8Q15.4 61.2 17.5 61.2Q18.9 61.2 19.7 60.4Q20.4 59.6 20.4 58.5Q20.4 57.8 20.2 57.6Q19.9 57.3 19.8 57.2Q19.6 57.1 19.3 56.9Q18.9 56.8 18.8 56.7Q18 56.4 17.5 56.3Q16.8 56.3 16.1 57Q15.4 57.8 15.4 58.8Z"/>
+                </g>
+              </g>
+              <g class="welcome-title__flourish">
+                <path class="welcome-title__trail" pathLength="1" d="M265 159C306 151 370 148 430 151C461 153 499 159 528 144"/>
+                <path class="welcome-title__flywhite" pathLength="1" d="M374 153C420 145 480 158 520 149"/>
+                <path class="welcome-title__spark" d="M529 140l2 4 4 1-4 2-1 4-2-4-4-1 4-2z"/>
+              </g>
+            </svg>
+          </h1>
+          <p class="welcome-hint" id="welcomeHint">把今天的故事，讲给在意的人听。</p>
+          <button class="welcome-create" id="welcomeCreateButton" type="button"><span aria-hidden="true">＋</span> 开始结识新朋友 <span class="welcome-create__arrow" aria-hidden="true">→</span></button>
+        </div>
+        <p class="welcome-footnote"><span>SOULHAVEN</span> 风吹过的地方，故事正悄悄生长。</p>
+      </div>
+
+      <section class="chat" id="chatView" aria-label="角色聊天" hidden>
+        <header class="chat-header">
+          <div class="chat-header__role">
+            <span class="avatar" id="chatAvatar" aria-hidden="true">角</span>
+            <div class="chat-header__text">
+              <h1 class="chat-header__name" id="chatRoleName">角色</h1>
+              <p class="chat-header__meta" id="chatRoleMeta">当前角色</p>
+            </div>
+          </div>
+          <button class="chat-mobile-button chat-mobile-more" id="mobileChatMore" type="button" aria-controls="chatHeaderActions" aria-expanded="false">更多</button>
+          <div class="chat-header__actions" id="chatHeaderActions">
+            <label class="time-switch" title="开启后角色会先进行更充分的内部思考再回答">
+              <span class="time-switch__label">深度思考</span>
+              <input
+                class="time-switch__input"
+                id="deepThinkingToggle"
+                type="checkbox"
+                aria-label="深度思考"
+                checked
+              >
+              <span class="time-switch__track" aria-hidden="true">
+                <span class="time-switch__thumb"></span>
+              </span>
+            </label>
+            <label class="time-switch" title="开启后角色会知道当前北京时间；关闭后发送的消息不携带时间信息">
+              <span class="time-switch__label">感知时间</span>
+              <input
+                class="time-switch__input"
+                id="recognitionTimeToggle"
+                type="checkbox"
+                aria-label="感知时间"
+                checked
+              >
+              <span class="time-switch__track" aria-hidden="true">
+                <span class="time-switch__thumb"></span>
+              </span>
+            </label>
+            <label class="time-switch" title="让角色分几条消息自然回应，说完后再继续聊天">
+              <span class="time-switch__label">分段回复</span>
+              <input class="time-switch__input" id="segmentedReplyToggle" type="checkbox" aria-label="分段回复">
+              <span class="time-switch__track" aria-hidden="true"><span class="time-switch__thumb"></span></span>
+            </label>
+            <button class="chat-header__action chat-header__action--summary" id="summarizeButton" type="button" title="总结并压缩当前历史">总结</button>
+            <button class="chat-header__action clear-history-button" id="clearHistoryButton" type="button">清空记录</button>
+            <div class="memory-rebuild-control"><button class="chat-header__action" id="rebuildMemoryButton" type="button">重置记忆库</button><details class="memory-rebuild-help"><summary aria-label="了解重置记忆库">?</summary><span>当你觉得角色总是失忆，也许是记忆库乱了。可以点击此按钮清空记忆库，并根据已有聊天记录和摘要重新放入记忆，以达到清理的效果。</span></details></div>
+            <button class="chat-header__action" id="sendInnerVoiceButton" type="button">发送心声</button>
+            <button class="chat-header__action" id="viewInnerVoiceButton" type="button">查看心声</button>
+          </div>
+        </header>
+
+        <div class="message-list" id="messageList" aria-live="polite">
+          <div class="history-loader" id="historyLoader" hidden><button type="button" id="loadOlderMessages">加载更多对话</button><span id="historyLoadStatus" role="status"></span></div>
+          <div class="chat-empty" id="chatEmpty">开始和角色聊天吧</div>
+        </div>
+
+        <div class="composer-wrap">
+          <form class="composer" id="chatForm">
+            <textarea
+              class="composer__input"
+              id="chatInput"
+              rows="1"
+              maxlength="4000"
+              placeholder="给角色发送消息..."
+              aria-label="消息内容"
+            ></textarea>
+            <button class="continue-button" id="continueSayButton" type="button" title="不发送用户消息，让角色继续接话">继续说</button>
+            <button class="send-button" id="sendButton" type="submit">发送</button>
+          </form>
+          <p class="segmented-reply-status" id="segmentedReplyStatus" role="status" hidden>等待角色说完话哦~</p>
+          <p class="composer-hint">Enter 发送，Shift + Enter 换行</p>
+        </div>
+
+        <div class="summary-overlay" id="summaryOverlay" role="status" aria-live="polite" aria-label="模型正在总结" hidden>
+          <div class="summary-overlay__card">
+            <span class="summary-spinner" aria-hidden="true"></span>
+            <p class="summary-overlay__title">模型正在总结中</p>
+            <p class="summary-overlay__text">请耐心等待哦~ 只要几秒到十几秒马上就好了~</p>
+            <p class="summary-overlay__note">对话超过 200 轮会自动触发总结，否则将导致角色失忆和 token 消耗增多。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="right-sidebar" id="rightSidebar" aria-label="右侧边栏" hidden>
+      <header class="right-sidebar__header">
+        <button class="icon-button right-sidebar__toggle" id="rightSidebarToggle" type="button"
+          title="收起右侧栏" aria-label="收起右侧栏" aria-expanded="true" aria-controls="rightSidebarBody">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <path d="M15 3v18"></path>
+            <path class="right-sidebar__arrow" d="m8.5 10 2 2-2 2"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="right-sidebar__body" id="rightSidebarBody">
+        <section class="role-state-card" aria-live="polite"><span class="mood-flower" aria-hidden="true">❀</span><p class="mood-eyebrow">A LITTLE FEELING</p><h2>此刻的心情</h2><p id="externalMood">平静</p><p id="moodSyncStatus">初始心情</p><div class="mood-meter-label"><label for="externalMoodIntensity">外在心情强度</label><span id="externalMoodIntensityText">50 / 100</span></div><progress id="externalMoodIntensity" max="100" value="50"></progress><p class="mood-footnote">情绪像风，藏在每一句回应里。</p><button id="viewTrueStateButton" class="true-state-entry" type="button"><span aria-hidden="true">☾</span><span>查看角色的真实状态<small>轻轻走近，心底的星光</small></span><span aria-hidden="true">↗</span></button></section>
+      </div>
+    </aside>
+  </div>
+
+  <div class="modal" id="createRoleModal" hidden>
+    <div class="modal__backdrop" data-close-modal="true"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="createRoleTitle">
+      <header class="modal__header">
+        <div>
+          <h2 class="modal__title" id="createRoleTitle">创建角色</h2>
+          <p class="modal__description">填写角色设定和对话模型；推荐配置记忆模型以检索世界观详细资料，高级选项可按需展开；开场白不填会使用默认值。</p>
+        </div>
+        <button class="icon-button" id="closeCreateRoleModal" type="button" title="关闭" aria-label="关闭创建角色窗口">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </header>
+
+      <form class="role-form" id="createRoleForm">
+        <div class="form-grid">
+          <label class="field">
+            <span class="field__label">角色姓名</span>
+            <input class="field__input" id="roleName" name="name" type="text" maxlength="50" placeholder="例如：林晚" required>
+          </label>
+
+          <label class="field">
+            <span class="field__label">角色英文名</span>
+            <input
+              class="field__input"
+              id="englishName"
+              name="english_name"
+              type="text"
+              maxlength="64"
+              pattern="[A-Za-z][A-Za-z0-9_-]{0,63}"
+              title="以英文字母开头，只能包含英文字母、数字、下划线和短横线"
+              placeholder="例如：LinWan"
+              autocomplete="off"
+              required
+            >
+          </label>
+
+          <label class="field field--wide"><span class="field__label">角色所在的世界观</span><select class="field__input" id="roleWorld" name="world_id" required><option value="reality">现实世界</option></select><span class="field__hint">创建角色前请先在「世界设定」中准备好世界观。</span><span class="field__hint" id="roleWorldHint">建议配置记忆模型；未配置时，角色无法检索世界观详细资料。</span></label>
+
+          <label class="field">
+            <span class="field__label">角色性别</span>
+            <input class="field__input" id="roleGender" name="gender" type="text" maxlength="20" placeholder="例如：女" required>
+          </label>
+
+          <div class="field field--wide role-image">
+            <label class="field__label" for="roleImage">平静时的角色形象（可选）</label>
+            <input class="field__input role-image__input" id="roleImage" type="file" accept=".png,.jpg,.jpeg,.gif,.mp4,image/png,image/jpeg,image/gif,video/mp4" aria-describedby="roleImageHint roleImageError">
+            <span class="field__hint" id="roleImageHint">支持 PNG / JPG / JPEG / GIF / MP4，单个文件不超过 10MB，画面不超过 2500 万像素。其他情绪未上传时使用这张图；未上传平静图时使用默认背景。</span>
+            <img class="role-image__preview" id="roleImagePreview" alt="角色形象图预览" hidden>
+            <span class="field__hint" id="roleImageStatus" role="status" aria-live="polite" hidden></span>
+            <button class="secondary-button role-image__clear" id="clearRoleImage" type="button" hidden>移除素材</button>
+            <p class="form-error" id="roleImageError" role="alert" hidden></p>
+          </div>
+
+          <div class="model-section-heading field--wide">
+            <span class="model-section-heading__title">对话模型（LLM）</span>
+            <span class="model-section-heading__hint">也就是大语言模型，用来生成角色回复，也就是你和角色聊天时看到的文字；下面的提供商、温度、模型名和 API Key 都属于它。</span>
+          </div>
+
+          <label class="field">
+            <span class="field__label">对话模型提供商</span>
+            <select class="field__input" id="provider" name="provider" required>
+              <option value="ollama">本地（Ollama）</option>
+              <option value="aliyun">阿里云百炼</option>
+              <option value="deepseek">DeepSeek</option>
+              <option value="siliconflow">硅基流动</option>
+              <option value="volcengine">火山引擎（豆包）</option>
+              <option value="zhipu">智谱清言</option>
+              <option value="kimi">Kimi（月之暗面）</option>
+              <option value="other">自定义(OpenAI兼容)</option>
+              <option value="claude_other">自定义(Claude兼容)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field__label">模型温度</span>
+            <input class="field__input" id="temperature" name="temperature" type="number" min="0" max="2" step="0.1" value="0.8" required>
+          </label>
+
+          <label class="field field--wide">
+            <span class="field__label">对话模型名</span>
+            <input class="field__input" id="modelName" name="model" type="text" placeholder="例如：qwen-plus" required>
+          </label>
+
+          <label class="field field--wide">
+            <span class="field__label">角色简介</span>
+            <input class="field__input" id="characterBrief" name="brief" type="text" maxlength="500" placeholder="简要介绍一下这个人" required>
+          </label>
+
+          <label class="field field--wide">
+            <span class="field__label">角色基本描述</span>
+            <textarea class="field__input field__textarea" id="characterDescription" name="base_info" rows="5" maxlength="4000" placeholder="描述角色的身份、性格、说话方式和背景。" required></textarea>
+          </label>
+
+          <label class="field field--wide">
+            <span class="field__label">开场白</span>
+            <input class="field__input" id="openingLine" name="opening_line" type="text" maxlength="500" placeholder="例如：你好呀，很高兴认识你。">
+            <span class="field__hint">不填写时默认使用：“Hi！今天过得怎么样”</span>
+          </label>
+
+          <section class="dialogue-examples field--wide" aria-labelledby="dialoguePairsTitle">
+            <div class="dialogue-examples__heading">
+              <div><h3 id="dialoguePairsTitle">自定义对话示例</h3><p>添加用户和角色的对话，让角色参考语气与表达方式。回复不会被固定匹配。</p></div>
+              <button class="secondary-button" id="addDialoguePair" type="button">＋ 新增</button>
+            </div>
+            <div class="dialogue-examples__list" id="dialoguePairs"></div>
+          </section>
+
+          <label class="field field--wide" id="apiKeyField" hidden>
+            <span class="field__label">对话模型 API Key</span>
+            <input class="field__input" id="apiKey" name="api_key" type="password" autocomplete="off" placeholder="输入对话模型对应平台的 API Key">
+          </label>
+
+          <label class="field field--wide" id="baseUrlField" hidden>
+            <span class="field__label">对话模型 Base URL</span>
+            <input class="field__input" id="baseUrl" name="base_url" type="url" placeholder="例如：https://api.example.com/v1">
+            <span class="field__hint">Claude 兼容模式请填写 Anthropic 中转站根地址，不要填写 /v1/messages 这类具体路径。</span>
+          </label>
+
+          <div class="provider-hint" id="ollamaHint">
+            对话模型使用本地 Ollama 前，请先安装并启动 Ollama，并确保已经下载对应模型。否则创建角色后无法正常对话。
+          </div>
+
+          <fieldset class="output-choice field--wide">
+            <legend>选择角色的输出方式</legend>
+            <div class="output-choice__options">
+              <label>
+                <input type="radio" name="stream_output" value="off" checked>
+                <span><strong>一次性输出</strong><small>生成完成后一次显示完整回复。</small></span>
+              </label>
+              <label>
+                <input type="radio" name="stream_output" value="on">
+                <span><strong>流式输出</strong><small>思考和正文随生成进度逐段出现。</small></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <section class="embedding-section field--wide" id="embeddingSection" aria-labelledby="embeddingSectionTitle">
+            <div class="embedding-section__header">
+              <div>
+                <h3 class="embedding-section__title" id="embeddingSectionTitle">记忆模型（Embedding，可选）</h3>
+                <p class="embedding-section__intro">
+                  这里的 Embedding 模型不负责生成对话，它只把角色记忆转换成向量，用来辅助 RAG 记忆库检索。不启用时仍沿用原来的总结记忆；启用并配置后，角色更容易记住之前聊过的内容，最直观的效果就是记忆力更好。
+                </p>
+                <p class="embedding-section__intro">记忆模型的配置与回忆效果都不能保证百分之百成功。</p>
+              </div>
+              <label class="embedding-section__enable">
+                <input id="embeddingEnabled" name="embedding_enabled" type="checkbox">
+                <span>启用记忆模型</span>
+              </label>
+            </div>
+
+            <div class="embedding-section__body" id="embeddingFields" hidden>
+              <div class="embedding-forgetting">
+                <div class="embedding-forgetting__heading">
+                  <label class="embedding-forgetting__choice">
+                    <input id="probabilisticForgetting" type="checkbox" aria-describedby="forgettingStatus">
+                    <span>概率遗忘</span>
+                  </label>
+                  <details class="embedding-forgetting__help" id="forgettingHelp">
+                    <summary aria-label="了解概率遗忘">?</summary>
+                    <p>为了避免角色成为什么都记得的工具，在回忆以前发生的事情的时候有概率回忆不起来。</p>
+                  </details>
+                </div>
+                <p class="embedding-forgetting__status" id="forgettingStatus">开启后，每次回忆有 30% 的概率暂时想不起来，触发后本轮不再尝试回忆。选择会随角色保存。</p>
+              </div>
+              <div class="form-grid">
+                <label class="field">
+                  <span class="field__label">记忆模型提供商（Embedding）</span>
+                  <select class="field__input" id="embeddingProvider" name="embedding_provider">
+                    <option value="ollama">本地（Ollama）</option>
+                    <option value="aliyun">阿里云百炼</option>
+                    <option value="volcengine">火山引擎</option>
+                    <option value="zhipu">智谱</option>
+                    <option value="qianfan">百度千帆</option>
+                    <option value="tencent">腾讯云</option>
+                    <option value="other">自定义（OpenAI 兼容）</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span class="field__label">记忆模型名（Embedding）</span>
+                  <input
+                    class="field__input"
+                    id="embeddingModel"
+                    name="embedding_model"
+                    type="text"
+                    maxlength="200"
+                    placeholder="例如：nomic-embed-text"
+                  >
+                  <span class="field__hint" id="embeddingModelHint">例如：nomic-embed-text</span>
+                </label>
+
+                <label class="field field--wide" id="embeddingApiKeyField">
+                  <span class="field__label">记忆模型 API Key</span>
+                  <input
+                    class="field__input"
+                    id="embeddingApiKey"
+                    name="embedding_api_key"
+                    type="password"
+                    autocomplete="off"
+                    placeholder="输入记忆模型对应平台的 API Key"
+                  >
+                  <span class="field__hint">只用于记忆模型的 Embedding 接口，与上面的对话模型 API Key 分开填写。</span>
+                </label>
+
+                <label class="field field--wide">
+                  <span class="field__label">记忆模型 Base URL</span>
+                  <input
+                    class="field__input"
+                    id="embeddingBaseUrl"
+                    name="embedding_base_url"
+                    type="url"
+                    placeholder="例如：https://api.example.com/v1"
+                  >
+                  <span class="field__hint">已按提供商填入官方 OpenAI 兼容地址；使用代理时可修改。</span>
+                </label>
+              </div>
+
+              <div class="provider-hint embedding-section__hint" id="embeddingHint">
+                开启后请选择记忆模型提供商并填写模型名。本地 Ollama 不需要 API Key。
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <details class="advanced-section" id="advancedFields">
+          <summary class="advanced-section__summary">
+            <span class="advanced-section__title">高级</span>
+            <span class="advanced-section__hint">角色细节与可选工具</span>
+          </summary>
+
+          <div class="advanced-section__body">
+            <p class="advanced-hint">以下内容全部可选，填得越完整，角色表现越稳定。</p>
+
+            <section class="embedding-section" aria-labelledby="searchSectionTitle">
+              <div class="embedding-section__header">
+                <div>
+                  <h3 class="embedding-section__title" id="searchSectionTitle">智能搜索（可选）</h3>
+                  <p class="embedding-section__intro">允许角色按需搜索网页并阅读相关内容。</p>
+                </div>
+                <label class="embedding-section__enable">
+                  <input id="searchEnabled" type="checkbox">
+                  启用智能搜索
+                </label>
+              </div>
+              <div class="embedding-section__body" id="searchFields" hidden>
+                <div class="form-grid">
+                  <label class="field">
+                    <span class="field__label">搜索服务商</span>
+                    <select class="field__input" id="searchProvider" disabled>
+                      <option value="deepseek">DeepSeek</option>
+                      <option value="custom">自定义</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">搜索 API Key</span>
+                    <input class="field__input" id="searchApiKey" type="password" autocomplete="new-password" disabled>
+                  </label>
+                  <label class="field field--wide" id="searchBaseUrlField" hidden>
+                    <span class="field__label">搜索 Base URL</span>
+                    <input class="field__input" id="searchBaseUrl" type="url" maxlength="2048" placeholder="https://api.deepseek.com/v1/tools" disabled>
+                    <span class="field__hint">填接口共同前缀。灵栖会以 JSON POST 请求 /search 和 /fetch。</span>
+                  </label>
+                  <label class="field field--wide" id="searchHeaderField" hidden>
+                    <span class="field__label">Header（JSON）</span>
+                    <textarea class="field__input field__textarea" id="searchHeader" rows="4" spellcheck="false" disabled
+                      placeholder='{&#10;  "Authorization": "Bearer {api_key}",&#10;  "Content-Type": "application/json"&#10;}'></textarea>
+                    <span class="field__hint">灰字为 DeepSeek 默认请求头。留空时使用默认值，填写时用你的 JSON，{api_key} 会替换成上面填写的密钥。</span>
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <section class="emotion-images" aria-labelledby="emotionImagesTitle">
+              <h3 id="emotionImagesTitle">为角色增加更多形象</h3>
+              <p>按情绪上传不同形象，每轮对话会根据角色表现切换。未上传的情绪会显示上方的平静形象。</p>
+              <p>支持 PNG / JPG / JPEG / GIF / MP4，每个文件不超过 10MB、画面不超过 2500 万像素；虚弱指生病或受伤，疲劳指工作或劳动后的劳累。</p>
+              <div class="emotion-images__grid" id="emotionImageFields"></div>
+            </section>
+
+            <div class="form-grid">
+              <label class="field">
+                <span class="field__label">年龄</span>
+                <input class="field__input" id="age" name="age" type="text" maxlength="50" placeholder="例如：18">
+              </label>
+
+              <label class="field">
+                <span class="field__label">身高</span>
+                <input class="field__input" id="height" name="height" type="text" maxlength="50" placeholder="例如：175cm">
+              </label>
+
+              <label class="field">
+                <span class="field__label">体重</span>
+                <input class="field__input" id="weight" name="weight" type="text" maxlength="50" placeholder="例如：60kg">
+              </label>
+
+              <label class="field">
+                <span class="field__label">家乡</span>
+                <input class="field__input" id="hometown" name="hometown" type="text" maxlength="100" placeholder="例如：江苏苏州">
+              </label>
+
+              <label class="field">
+                <span class="field__label">当前所在地</span>
+                <input class="field__input" id="currentLocation" name="current_location" type="text" maxlength="100" placeholder="例如：上海">
+              </label>
+
+              <label class="field field--wide">
+                <span class="field__label">与用户的初始关系</span>
+                <input class="field__input" id="initialRelationship" name="initial_relationship" type="text" maxlength="300" placeholder="例如：第一次来书店的客人，彼此还不熟悉">
+                <span class="field__hint">说明角色一开始和用户是什么关系，会影响称呼、距离感和语气。</span>
+              </label>
+
+              <label class="field">
+                <span class="field__label">说话风格</span>
+                <input class="field__input" id="speakingStyle" name="speaking_style" type="text" maxlength="500" placeholder="例如：简短、克制、偶尔冷幽默">
+              </label>
+
+              <label class="field field--wide">
+                <span class="field__label">自由填写的对话示例</span>
+                <textarea class="field__input field__textarea" id="dialogueExamples" name="dialogue_examples" rows="4" maxlength="3000" placeholder="写几段能体现角色口吻的示例对话。"></textarea>
+                <span class="field__hint">会与上面的成对示例一起保存，供角色参考。</span>
+              </label>
+
+              <label class="field field--wide">
+                <span class="field__label">重要性格特点</span>
+                <textarea class="field__input field__textarea" id="personalityTraits" name="personality_traits" rows="3" maxlength="2000" placeholder="例如：表面冷淡，实际很在意别人的感受。"></textarea>
+              </label>
+            </div>
+          </div>
+        </details>
+
+        <p class="form-error" id="createRoleError" hidden></p>
+
+        <footer class="modal__footer">
+          <button class="secondary-button" id="cancelCreateRole" type="button">取消</button>
+          <button class="primary-button modal__submit" id="createRoleSubmit" type="submit">
+            <span class="button-label">创建角色</span>
+          </button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <dialog class="clear-history-dialog" id="reasoningDialog" aria-labelledby="reasoningDialogTitle" aria-describedby="reasoningDialogDescription">
+    <form method="dialog">
+      <h2 id="reasoningDialogTitle">要展开思考内容吗？</h2>
+      <p id="reasoningDialogDescription">模型的思考可能带点“助手味儿”，影响角色沉浸感。提前窥见 TA 的内心，也可能少一点等待回复的期待感。</p>
+      <div class="clear-history-actions">
+        <button value="cancel" autofocus>保持折叠</button>
+        <button value="show">展开思考</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="clear-history-dialog" id="clearHistoryDialog" aria-labelledby="clearHistoryTitle">
+    <form id="clearHistoryForm">
+      <p class="clear-history-eyebrow">清空聊天记录</p>
+      <h2 id="clearHistoryTitle">清空与当前角色的聊天记录？</h2>
+      <p>这会永久清空该角色的原始对话、总结和记忆库，并重置当前对话上下文；角色开场白会保留。<strong>此操作不可逆。</strong></p>
+      <label for="clearHistoryConfirmation">请输入“我确认要清空聊天记录”后再确认：</label>
+      <input id="clearHistoryConfirmation" type="text" autocomplete="off" spellcheck="false" placeholder="我确认要清空聊天记录" required>
+      <p id="clearHistoryError" role="status"></p>
+      <div class="clear-history-actions"><button id="cancelClearHistory" type="button">取消</button><button id="confirmClearHistory" type="submit" disabled>确认清空</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="create-notice" id="createNotice" aria-labelledby="createNoticeTitle" aria-describedby="createNoticeDescription">
+    <div class="create-notice__ornament" aria-hidden="true">✧ ❀ ✧</div>
+    <p class="create-notice__eyebrow">BEFORE WE MEET</p>
+    <h2 id="createNoticeTitle">在相遇之前</h2><p class="create-notice__intro">为新朋友留一份稳定而长久的记忆。</p>
+    <div id="createNoticeDescription" class="create-notice__notes"><p><span>01</span><strong>记忆模型，请慎重选择</strong><br>创建后不要修改 Embedding 提供商或模型，更换后可能使已有记忆无法使用。</p><p><span>02</span><strong>让故事安心保存在这里</strong><br>请不要手动修改角色配置、历史文件或数据库。需要更换记忆模型时，请新建角色；重置记忆库使用当前角色原有的记忆模型。</p><p class="create-notice__small">智能搜索可在创建角色时通过「高级」配置。</p></div>
+    <div class="create-notice__actions"><button id="cancelCreateNotice" type="button" autofocus>稍后再说</button><button id="acceptCreateNotice" type="button">我了解了，开始创建 <span aria-hidden="true">✦</span></button></div>
+  </dialog>
+
+  <dialog class="clear-history-dialog" id="rebuildMemoryDialog" aria-labelledby="rebuildMemoryTitle"><h2 id="rebuildMemoryTitle">重新整理记忆？</h2><p>将清空当前角色的摘要与原始对话向量，再用已有聊天记录和摘要重新生成。聊天记录与摘要文件会保留；过程可能需要一些时间，并产生记忆模型调用费用。</p><p>请保持记忆模型可用；如重建和恢复均失败，记忆库可能不完整，可以根据原始文件重试。</p><div class="clear-history-actions"><button id="cancelRebuildMemory" type="button" autofocus>取消</button><button id="confirmRebuildMemory" type="button">开始重建</button></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="/static/js/state-reveal.js" defer></script>
+  <script src="/static/js/app.js" defer></script>
+  <script src="/static/js/chat/entrance.js" defer></script>
+  <script src="/static/js/chat/role-entrance.js" defer></script>
+</body>
+</html>

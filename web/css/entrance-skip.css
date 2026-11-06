@@ -1,0 +1,9 @@
+/* Only entrance effects are skipped; scenery, glowing icons and video loops continue. */
+.entrance-skipped .navigation-bar,
+.entrance-skipped .archive__intro,
+.entrance-skipped .archive__meta,
+.entrance-skipped .archive__status,
+.entrance-skipped .character-card--enter,
+.entrance-skipped .archive-pagination--enter,
+.entrance-skipped .topbar,
+.entrance-skipped .profile { animation: none !important; }

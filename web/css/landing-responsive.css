@@ -1,0 +1,41 @@
+/* 保留旧灵栖桌面视觉，仅修正小屏溢出；不影响 chat.css。 */
+body { margin: 0; }
+.navigation-bar { gap: 0; }
+.entrance[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+a:focus-visible { outline: 3px solid #6975eb; outline-offset: 5px; }
+@media (max-width: 1200px) {
+  .navigation-bar { height: auto; min-height: 96px; padding: 20px 28px; flex-wrap: wrap; gap: 18px; }
+  .navigation-bar > .entrance:not(:first-of-type) { margin-left: 10px; }
+  .navigation-bar > .entrance { font-size: 19px; }
+  #bottom { flex-wrap: wrap; padding-top: 30px; padding-bottom: 30px; }
+  .characteristic { min-width: 260px; }
+  .text { left: 0; bottom: 0; }
+}
+@media (max-width: 760px) {
+  .navigation-bar { width: calc(100% - 24px); border-radius: 28px; padding: 18px; gap: 14px; }
+  .navigation-bar > .main { font-size: 32px !important; }
+  .navigation-bar > .star { bottom: 8px !important; }
+  .navigation-bar > .entrance:first-of-type { margin-left: 0; }
+  .navigation-bar > .entrance { font-size: 16px; }
+  .navigation-bar > a:last-child { padding: 10px 22px !important; }
+  .entrance.active::after { top: 27px; }
+  #main { padding-bottom: 50px; }
+  #main > #foreword { left: 6vw !important; top: 35px !important; }
+  div.publicity { margin-left: 6vw; margin-right: 6vw; width: auto; }
+  #main > div.publicity:nth-of-type(1) { font-size: 76px !important; }
+  #main > div.publicity:nth-of-type(2) { font-size: 24px !important; }
+  #main > div.publicity:nth-of-type(3) { font-size: 18px !important; }
+  .start { left: auto !important; top: 0; margin: 125px 0 0 6vw; padding: 14px 24px !important; font-size: 18px; gap: 35px; }
+  .start + .start { margin-top: 18px; }
+  #bottom { display: grid !important; gap: 20px !important; }
+  .characteristic { min-width: 0; padding: 24px; }
+  .bottom-title { font-size: 25px; }
+  .bottom-text { font-size: 17px; }
+  .small { display: none; }
+  .info { margin: 70px 16px 0 !important; min-height: 0 !important; }
+  section.info-card { width: 100%; min-width: 0; padding: 30px 22px; }
+  #name { font-size: 52px; white-space: normal; overflow-wrap: anywhere; }
+  .single-info { padding: 6px; }
+  .buttons { gap: 12px; }
+  .button { padding: 12px; font-size: 16px; }
+}

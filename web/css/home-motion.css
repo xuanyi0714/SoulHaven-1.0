@@ -1,0 +1,37 @@
+/* Motion is confined to the lower feature section; the hero remains a still image. */
+#bottom { position: relative; isolation: isolate; overflow: hidden; background-image: none !important; background-color: #f3f1fc; }
+#bottom::before { content: ""; position: absolute; inset: -18px; z-index: -2; pointer-events: none; background: url('/static/pictures/home_panel.png') center bottom / cover no-repeat; transform-origin: 50% 100%; animation: home-shadow-breeze 11s ease-in-out infinite; }
+#bottom::after { content: ""; position: absolute; inset: -20%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 18% 75%, #fff5d078, transparent 35%), radial-gradient(ellipse at 86% 25%, #d5eaff80, transparent 40%); animation: home-light-drift 14s ease-in-out infinite; }
+.feature-icon { position: relative; display: inline-flex; align-items: center; justify-content: center; width: clamp(56px, 6.4vw, 130px); flex: none; --feature-glow: #85d1ff; --glint-delay: -1s; }
+.feature-icon--like { --feature-glow: #ffadc6; --glint-delay: -4.5s; }
+.feature-icon--world { --feature-glow: #a5a3ff; --glint-delay: -7s; }
+.feature-icon img { display: block; width: 100%; height: auto; animation: home-icon-glow 10s ease-in-out var(--glint-delay) infinite; }
+.feature-icon::after { content: "✦"; position: absolute; top: 1%; right: 2%; color: #fff; font-size: 18px; line-height: 1; text-shadow: 0 0 4px #fff, 0 0 10px var(--feature-glow), 0 0 16px var(--feature-glow); pointer-events: none; animation: home-icon-spark 10s ease-in-out var(--glint-delay) infinite; }
+@keyframes home-shadow-breeze { 0%,100% { transform: translate(-6px, 0) rotate(-.5deg) scale(1.025); } 50% { transform: translate(7px, 3px) rotate(.6deg) scale(1.025); } }
+@keyframes home-light-drift { 0%,100% { opacity: .35; transform: translateX(-2%); } 50% { opacity: .8; transform: translateX(2%); } }
+@keyframes home-icon-glow { 0%,70%,100% { filter: none; } 80% { filter: brightness(1.12) drop-shadow(0 0 6px var(--feature-glow)); } 88% { filter: brightness(1.02); } }
+@keyframes home-icon-spark { 0%,70%,96%,100% { opacity: 0; transform: scale(.25); } 80% { opacity: .95; transform: scale(1.15); } 90% { opacity: .15; transform: scale(.7); } }
+
+/* Sweep a narrow highlight over the small corner illustrations' actual strokes. */
+.characteristic .feature-accent { opacity: 1; }
+.feature-accent { --accent-image: url('/static/pictures/note.png'); --accent-glow: #9cdbff; --accent-delay: 0s; }
+.feature-accent--growth { --accent-image: url('/static/pictures/pick_up.png'); --accent-glow: #ffc7dc; --accent-delay: -3s; }
+.feature-accent--city { --accent-image: url('/static/pictures/city.png'); --accent-glow: #b5aeff; --accent-delay: -6s; }
+.feature-accent img { display: block; width: 100%; height: auto; opacity: .65; animation: home-accent-glow 9s ease-in-out var(--accent-delay) infinite; }
+.feature-accent::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 44%, var(--accent-glow) 48%, #fff 50%, var(--accent-glow) 52%, transparent 56%) 100% 50% / 300% 100% no-repeat;
+    -webkit-mask: var(--accent-image) center / contain no-repeat;
+    mask: var(--accent-image) center / contain no-repeat;
+    filter: drop-shadow(0 0 3px var(--accent-glow));
+    animation: home-accent-sweep 9s ease-in-out var(--accent-delay) infinite;
+}
+@keyframes home-accent-glow { 0%,60%,85%,100% { opacity: .65; filter: none; } 70% { opacity: 1; filter: brightness(1.25) drop-shadow(0 0 5px var(--accent-glow)); } }
+@keyframes home-accent-sweep { 0%,60% { opacity: 0; background-position: 100% 50%; } 64% { opacity: 1; background-position: 100% 50%; } 78% { opacity: 1; background-position: 0% 50%; } 82%,100% { opacity: 0; background-position: 0% 50%; } }
+@media (prefers-reduced-motion: reduce) {
+    #bottom::before, #bottom::after, .feature-icon img, .feature-icon::after, .feature-accent img, .feature-accent::after { animation: none; }
+    .feature-icon::after, .feature-accent::after { opacity: 0; }
+}

@@ -1,0 +1,310 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
+    min-height: 100svh;
+    overflow-x: clip;
+}
+
+/* The wallpaper fills the viewport independently of the foreground sections. */
+.home-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #e8d7ce url('/static/pictures/main.png') center top / cover no-repeat;
+    pointer-events: none;
+}
+
+/* Keep the panel's final space stable while its surface rises over the wallpaper. */
+.home-backdrop.has-parallax {
+    transform: perspective(1400px) scale(1.045);
+    will-change: transform;
+}
+
+.home-wallpaper {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+
+.home-wallpaper.is-playing { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce), (max-width: 600px) {
+    .home-wallpaper { display: none; }
+}
+
+.home-panel-slot {
+    position: relative;
+    overflow: clip;
+}
+
+.navigation-bar{
+    width:calc(100% - 40px);
+    height:110px;
+    background-color:rgba(255, 255, 255, 0.89);
+    border-radius:60px;
+    margin:0 auto;
+    display:flex;
+    align-items: center;
+    padding-left: 65px;
+    padding-right: 35px;
+    box-sizing: border-box;
+}
+
+.navigation-bar > a.entrance:first-of-type {
+    margin-left: auto;
+}
+
+.navigation-bar > .entrance:not(a:first-of-type) {
+    margin-left: clamp(18px, 2.5vw, 45px);
+}
+
+.navigation-bar > .star {
+    margin-left: 8px;
+}
+
+.entrance{
+    position:relative;
+    font-size:23px;
+    font-weight:400;
+    display:inline-block;
+    text-decoration:none;
+    color: #2d2d3a;
+}
+
+.entrance.active::after{
+    content:'';
+    position: absolute;
+    width: 40px;
+    height: 3px;
+    background-color: #6975eb;
+    border-radius: 999px;
+    top:40px;
+    right:3px;
+}
+
+.entrance.active{
+    color:#6975eb
+}
+
+.star{
+    color:#8790ff;
+    display:inline-block;
+    font-size:30px;
+    transform:scaleX(0.9) scaleY(1.15);
+}
+
+.label{
+    color:#8790ff;
+    position:absolute;
+    left:60px;
+    font-size: 20px;
+    font-weight:450;
+    letter-spacing:1.6px;
+}
+
+#foreword{
+    height:43px;
+    width:250px;
+    display:flex;
+    align-items:center;
+    border-style:solid;
+    border-color:#8190f2;
+    border-radius:100px;
+    border-width:2px;
+    background-color: rgba(241, 243, 255, 0.7);
+}
+
+div.publicity {
+    font-family: serif;
+    color: rgba(39, 34, 66, 0.95);
+    position: relative;
+    width: fit-content;
+    margin-left: 165px;
+}
+
+.start{
+    position:relative;
+    top:120px;
+    font-size:25px;
+    padding:14px 35px;
+    border-radius:999px;
+    display:inline-flex;
+    gap:100px;
+}
+
+.characteristic{
+    border-width:2px;
+    /* border-color:rgba(110, 120, 165, 0.22); */
+    background-color:white;
+    border-style:solid;
+    border-radius:15px;
+    flex:1;
+    padding:40px;
+    gap:20px;
+}
+
+.text{
+    display:inline-block;
+    position: relative;
+    left:30px;
+    bottom:15px;
+}
+
+.bottom-title{
+    font-family:serif;
+    color:rgb(39, 34, 66, 0.95);
+    font-size:30px;
+    line-height:18px;
+}
+
+.bottom-text{
+    color:rgba(34, 59, 66, 0.95);
+    font-family:sans-serif;
+    font-size:20px;
+}
+
+.small{
+    position:relative;
+    width: 70px;
+    top:30px;
+    left:45px;
+}
+
+/* Keep the original horizontal cards while their contents scale with the viewport. */
+#bottom {
+    align-items: stretch !important;
+    gap: clamp(14px, 1.5vw, 30px) !important;
+    padding: clamp(24px, 2vw, 35px) 6%;
+}
+
+.characteristic {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    padding: clamp(18px, 2vw, 40px);
+    gap: clamp(12px, 1.5vw, 30px);
+}
+
+.characteristic > img:first-child {
+    width: clamp(56px, 6.4vw, 130px);
+    height: auto;
+    flex: none;
+}
+
+.characteristic .text {
+    position: static;
+    display: block;
+    min-width: 0;
+}
+
+.bottom-title {
+    font-size: clamp(20px, 1.5vw, 30px);
+    line-height: 1.2;
+    margin: 0 0 12px;
+}
+
+.bottom-text {
+    font-size: clamp(15px, 1vw, 20px);
+    line-height: 1.45;
+    margin: 0;
+}
+
+.characteristic .small {
+    position: absolute;
+    width: clamp(38px, 3.5vw, 70px) !important;
+    height: auto;
+    top: auto !important;
+    left: auto !important;
+    right: 12px;
+    bottom: 12px;
+    opacity: .55;
+    pointer-events: none;
+}
+
+@media (min-width: 1601px) and (max-width: 2000px) {
+    .home-backdrop {
+        background-image: linear-gradient(90deg, rgba(255, 241, 222, .25), rgba(255, 241, 222, .55) 45%, transparent 62%), url('/static/pictures/main.png') !important;
+    }
+}
+
+@media (max-width: 1600px) {
+    .home-backdrop {
+        background-image: linear-gradient(90deg, rgba(255, 241, 222, .72), rgba(255, 241, 222, .78) 40%, transparent 66%), url('/static/pictures/main.png') !important;
+    }
+    #main {
+        padding-bottom: 150px;
+    }
+    #foreword { left: clamp(32px, 6vw, 100px) !important; }
+    div.publicity {
+        margin-left: clamp(32px, 6vw, 100px);
+        max-width: min(43%, 670px);
+    }
+    #main > div.publicity:nth-of-type(1) { font-size: clamp(72px, 7vw, 120px) !important; }
+    #main > div.publicity:nth-of-type(2) { font-size: clamp(24px, 2.1vw, 33px) !important; }
+    #main > div.publicity:nth-of-type(3) { font-size: clamp(18px, 1.6vw, 25px) !important; }
+    .start { left: clamp(32px, 6vw, 100px) !important; gap: clamp(32px, 5vw, 100px); }
+    .start + .start { margin-left: 24px; }
+}
+
+@media (max-width: 1400px) {
+    .navigation-bar { height: auto; min-height: 96px; padding: 18px 28px; gap: 16px; flex-wrap: wrap; }
+    .navigation-bar > .entrance:not(a:first-of-type) { margin-left: clamp(8px, 2vw, 25px); }
+    .navigation-bar > .entrance { font-size: 19px; }
+}
+
+@media (max-width: 900px) {
+    #bottom { flex-wrap: wrap; }
+    .characteristic { flex: 1 1 300px; }
+    .bottom-text br { display: none; }
+    div.publicity { max-width: 75%; }
+}
+
+@media (max-width: 600px) {
+    .navigation-bar { width: calc(100% - 24px); border-radius: 28px; }
+    .navigation-bar > a.entrance:first-of-type { margin-left: 0; }
+    .navigation-bar > .entrance { font-size: 16px; }
+    .navigation-bar > a:last-child { padding: 10px 22px !important; }
+    div.publicity { max-width: calc(100% - 64px); }
+    .start { font-size: 18px; padding: 14px 20px !important; gap: 24px; }
+    .start + .start { margin-left: 10px; }
+    .characteristic { flex-basis: 100%; }
+}
+
+@media (max-width: 600px) and (pointer: coarse) {
+    #main { padding-bottom: 38px; }
+    .navigation-bar { padding: 12px 16px; gap: 4px 14px; }
+    .navigation-bar > .entrance,
+    .navigation-bar > .entrance:not(a:first-of-type) {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        margin-left: 0;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+    .navigation-bar > a.entrance:first-of-type { margin-left: auto; }
+    .entrance.active::after { top: auto; bottom: 3px; right: 0; width: 100%; }
+    #foreword { top: 28px !important; }
+    #main > div.publicity {
+        top: auto !important;
+        max-width: calc(100% - 48px);
+        margin: 14px 24px 0;
+    }
+    #main > div.publicity:nth-of-type(1) { margin-top: 42px; }
+    #main > div.publicity:nth-of-type(3) br { display: none; }
+    .start, .start + .start {
+        top: auto;
+        left: auto !important;
+        margin: 22px 0 0 24px;
+    }
+    .start + .start { margin-left: 8px; }
+}

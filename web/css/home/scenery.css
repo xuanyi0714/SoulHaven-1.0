@@ -1,0 +1,48 @@
+/* All scenery coordinates follow the video's cover fit and its parent parallax. */
+.home-scenery {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1920px;
+    height: 1080px;
+    transform: translateX(-50%) scale(var(--scene-scale, 1));
+    transform-origin: center top;
+    pointer-events: none;
+    visibility: hidden;
+}
+.home-scenery.is-active { visibility: visible; }
+.home-tree-crown { position: absolute; left: 635px; top: 450px; width: 180px; height: 100px; }
+.home-sunlight {
+    position: absolute;
+    left: 345px;
+    top: 573px;
+    width: 430px;
+    height: 280px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(ellipse, #fffcebd9 0%, #fff2b67d 8%, #ffd38742 25%, #ffce6b18 48%, transparent 70%);
+    mix-blend-mode: screen;
+    opacity: var(--sun-strength, 0);
+}
+.home-sunlight::after {
+    content: '';
+    position: absolute;
+    inset: 43% -12%;
+    background: radial-gradient(ellipse, #fff8d9b3, #ffe8ad38 35%, transparent 70%);
+    transform: rotate(-12deg);
+}
+/* Only the rim catches the sun; the label and button surface stay readable. */
+.start.home-sun-rim::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    border: 1px solid #fff3c2b3;
+    box-shadow: -8px 5px 22px 2px #ffd9959c, 0 0 5px #fff8dc;
+    opacity: var(--sun-rim, 0);
+    pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce), (max-width: 600px) {
+    .home-scenery { display: none; }
+    .start.home-sun-rim::before { display: none; }
+}

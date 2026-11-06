@@ -1,0 +1,169 @@
+/* The backdrop follows the sidebar so the image resizes with the available space. */
+.welcome-backdrop {
+  position: absolute;
+  inset: 0 0 0 var(--sidebar-width);
+  transition: left 200ms ease;
+  pointer-events: none;
+  background-color: #eaf5ff;
+  background-image: url('/static/pictures/seaside_tea.webp');
+  background-size: cover;
+  background-position: 58% center;
+}
+.app[data-view="home"]:has(> .sidebar.is-collapsed) > .welcome-backdrop { left: var(--sidebar-collapsed-width); }
+.welcome-pending .app[data-view="home"] > .welcome-backdrop { left: 0; }
+.app[data-view="role"] > .welcome-backdrop { display: none; }
+.app[data-view="home"] > .main { position: relative; background: transparent; }
+.app[data-view="home"] .welcome { background: transparent; }
+.app > .sidebar { position: relative; }
+
+/* Apply the same sky tint to the video and its static fallback. */
+.welcome-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 100% 53% at 12% 0%, #d7edff86, transparent 92%),
+    radial-gradient(ellipse 63% 49% at 3% 45%, #f3faffd6, #f1faffad 48%, transparent 100%);
+}
+.welcome-wallpaper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% center;
+  opacity: 0;
+  transition: opacity 350ms ease;
+}
+.welcome-wallpaper.is-playing { opacity: 1; }
+
+.welcome-title {
+  position: relative;
+  width: clamp(285px, 28vw, 530px);
+  max-width: 100%;
+  white-space: normal;
+}
+#welcomeTitle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.welcome-title__ink {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.welcome-title__letters {
+  fill: currentColor;
+  filter: drop-shadow(0 1px 3px #f6fdffd9);
+}
+.welcome-title__stroke {
+  fill: none;
+  stroke: white;
+  stroke-dasharray: 1;
+}
+.welcome-title__flourish {
+  color: #0e5871;
+  stroke: currentColor;
+  opacity: 0;
+}
+.welcome-title__trail { stroke-width: 2.2; }
+.welcome-title__flywhite { stroke-width: 1; opacity: .55; }
+.welcome-title__spark { fill: #fff0cb; stroke: none; filter: drop-shadow(0 0 3px #e6b16c); opacity: 0; }
+.app[data-view="home"][data-entrance="complete"] .welcome-title__flourish {
+  animation: welcome-ink-trail 9s ease-out infinite;
+}
+.app[data-view="home"][data-entrance="complete"] .welcome-title__spark {
+  animation: welcome-ink-spark 9s ease-out infinite;
+}
+@keyframes welcome-ink-trail {
+  0% { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; }
+  4% { opacity: .65; }
+  12%, 20% { stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .65; }
+  38%, 100% { stroke-dasharray: 1; stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes welcome-ink-spark {
+  0%, 10% { opacity: 0; }
+  15% { opacity: .9; }
+  26%, 100% { opacity: 0; }
+}
+
+.app[data-view="home"] .brand-name strong { color: #252b5d; }
+.app[data-view="home"] .brand-name small, .app[data-view="home"] .section-heading { color: #605a83; }
+.app[data-view="home"] .list-item { color: #28325c; }
+.app[data-view="home"] .list-item .avatar { border-radius: 50%; box-shadow: 0 0 0 2px #fff, 0 3px 10px #303e7654; }
+.app[data-view="home"] .primary-button {
+  background: linear-gradient(120deg, #6749ca, #514ac7 60%, #3868c4);
+  box-shadow: inset 0 1px 9px #b9b4ff94, 0 4px 12px #44419456;
+}
+.app[data-view="home"] .primary-button:hover { background: linear-gradient(120deg, #583cba, #433db7 60%, #2e58ad); }
+.app[data-view="home"] .primary-button::after { color: #fff; }
+.app[data-view="home"] .sidebar-footer { padding: 5px; border: 1px solid #fffc; background: #fff8; }
+.app[data-view="home"] .sidebar-footer a { color: #433c72; }
+
+/* The star is independent of the capsule surface, so it can shine before the reveal. */
+.welcome-topline .world-home {
+  isolation: isolate;
+  overflow: visible;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.world-home__surface {
+  position: absolute;
+  z-index: -1;
+  inset: -1px;
+  pointer-events: none;
+  border: 1px solid #ffffffd9;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 18% 10%, #ffffffed, transparent 65%), linear-gradient(115deg, #e2eafff5, #acc9f3e8);
+  box-shadow: inset 0 0 12px #fffa, 0 5px 16px #5c8c8c21;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.welcome-pending .world-home__star,
+.welcome-pending .world-home__surface,
+.welcome-pending .world-home__words,
+.welcome-pending .world-home__arrow { opacity: 0; }
+.welcome-pending .world-archive,
+.welcome-pending .welcome-hero,
+.welcome-pending .welcome-footnote,
+.welcome-pending #sidebar { visibility: hidden; }
+
+@media (max-width: 720px) {
+  /* Leave at least 200px for the scene when the role list is expanded. */
+  .app { --sidebar-width: min(248px, max(120px, calc(100vw - 200px))); }
+  .app:has(> .sidebar:not(.is-collapsed)) .welcome-topline { padding-right: 0; }
+  .welcome-backdrop { background-image: none; }
+  .welcome-backdrop::before {
+    content: "";
+    display: block;
+    aspect-ratio: 1122 / 1402;
+    max-height: clamp(290px, 47dvh, 460px);
+    background: radial-gradient(ellipse 110% 52% at 0 0%, #d7edff75, transparent),
+      linear-gradient(180deg, transparent 58%, #eaf5ff 98%),
+      url('/static/pictures/seaside_tea_mobile.webp') center 43% / cover no-repeat;
+  }
+  .welcome-wallpaper, .welcome-backdrop::after { display: none; }
+  .welcome-title { width: clamp(210px, 59vw, 310px); }
+}
+@media (max-width: 420px) {
+  .app:has(> .sidebar:not(.is-collapsed)) .welcome-hero { padding-top: clamp(185px, 25dvh, 250px); }
+  .welcome-eyebrow { gap: 6px; font-size: 11px; letter-spacing: .1em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app > .sidebar, .app > .right-sidebar, .welcome-backdrop { transition: none; }
+  .welcome-wallpaper { display: none; }
+  .app[data-view="home"][data-entrance="complete"] .welcome-title__flourish,
+  .app[data-view="home"][data-entrance="complete"] .welcome-title__spark { animation: none; }
+}

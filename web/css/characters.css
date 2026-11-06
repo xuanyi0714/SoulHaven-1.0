@@ -1,0 +1,126 @@
+#main{
+    min-height: 100vh;
+    background-image: url('/static/pictures/characters.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    padding-top:18px;
+}
+.navigation-bar{
+    width:calc(100% - 40px);
+    height:110px;
+    background-color:rgba(255, 255, 255, 0.89);
+    border-radius:60px;
+    margin:0 auto;
+    display:flex;
+    align-items: center;
+    padding-left: 65px;
+    padding-right: 35px;
+    box-sizing: border-box;
+}
+.star{
+    color:#8790ff;
+    display:inline-block;
+    font-size:30px;
+    transform:scaleX(0.9) scaleY(1.15);
+}
+.navigation-bar > .entrance:first-of-type {
+    margin-left: auto;
+}
+
+.navigation-bar > .entrance:not(:first-of-type) {
+    margin-left: clamp(18px, 2.5vw, 45px);
+}
+
+.navigation-bar > .star {
+    margin-left: 8px;
+}
+.entrance{
+    position:relative;
+    font-size:23px;
+    font-weight:400;
+    display:inline-block;
+    text-decoration:none;
+    color: #2d2d3a;
+}
+.entrance.active::after{
+    content:'';
+    position: absolute;
+    width: 90px;
+    height: 3px;
+    background-color: #6975eb;
+    border-radius: 999px;
+    top:40px;
+    right:1px;
+}
+.entrance.active{
+    color:#6975eb
+}
+
+/* 角色档案：与原有紫色场景和导航保持一致。 */
+body { margin: 0; color: #272b49; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; }
+* { box-sizing: border-box; }
+.archive { width: min(1320px, calc(100% - 80px)); margin: 66px auto 0; padding-bottom: 80px; }
+.archive__intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.archive__eyebrow { margin: 0 0 10px; color: #6671c0; font-size: 11px; font-weight: 700; letter-spacing: .18em; }
+.archive h1 { margin: 0; color: #30345c; font-family: serif; font-size: clamp(32px, 3vw, 42px); letter-spacing: .08em; }
+.archive__subtitle { margin: 10px 0 0; color: #636a8e; font-size: 14px; }
+.archive-search { position: relative; display: flex; align-items: center; width: min(330px, 100%); flex: 0 0 auto; border: 1px solid rgba(141, 150, 204, .45); border-radius: 999px; background: rgba(255,255,255,.88); box-shadow: 0 8px 28px rgba(74, 83, 151, .09); }
+.archive-search__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.archive-search svg { width: 20px; height: 20px; margin-left: 19px; flex: none; color: #777fad; }
+.archive-search input { width: 100%; padding: 15px 18px 15px 10px; border: 0; outline: 0; background: transparent; color: #30345c; font: inherit; font-size: 14px; }
+.archive-search:focus-within { outline: 2px solid #7884ee; outline-offset: 2px; }
+.archive__count { margin: 32px 0 14px; color: #59618a; font-size: 13px; font-weight: 600; }
+.archive-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 240px)); justify-content: start; gap: 20px; }
+.character-card { display: flex; flex-direction: column; min-width: 0; padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.9); border-radius: 22px; background: rgba(255,255,255,.92); color: inherit; font: inherit; text-align: left; cursor: pointer; box-shadow: 0 12px 35px rgba(69, 76, 141, .14); transition: transform .2s ease, box-shadow .2s ease; }
+.character-card:hover { transform: translateY(-5px); box-shadow: 0 18px 42px rgba(69,76,141,.23); }
+.character-card--create { align-items: center; justify-content: center; min-height: 218px; gap: 4px; border: 2px dashed #9ba5de; background: rgba(255,255,255,.55); color: #6876c5; text-align: center; text-decoration: none; font-size: 14px; font-weight: 600; }
+.character-card__plus { font-size: 56px; font-weight: 300; line-height: 1; }
+.character-card:focus-visible, .archive-pagination button:focus-visible { outline: 3px solid #6877e9; outline-offset: 3px; }
+.character-card__cover { position: relative; display: grid; place-items: center; width: 100%; height: 100px; overflow: hidden; background: linear-gradient(135deg, #e2e6fb, #c4ccef); }
+.character-card__cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.character-card__fallback { color: #747fb9; font-family: serif; font-size: 42px; }
+.character-card__body { display: flex; flex: 1; flex-direction: column; width: 100%; padding: 12px 15px 13px; }
+.character-card__english { margin: 0 0 4px; color: #8289b1; font-size: 10px; font-weight: 700; letter-spacing: .09em; overflow-wrap: anywhere; }
+.character-card h2 { margin: 0; color: #30345c; font-size: 17px; }
+.character-card__description { margin: 6px 0 10px; overflow: hidden; color: #777e9b; font-size: 12px; line-height: 1.5; text-overflow: ellipsis; white-space: nowrap; }
+.character-card__footer { margin-top: auto; color: #6976db; font-size: 13px; font-weight: 600; }
+.archive__status { margin: 26px 0; padding: 18px 20px; border: 1px solid rgba(255,255,255,.9); border-radius: 16px; background: rgba(255,255,255,.82); color: #59618a; }
+.archive-pagination { display: flex; justify-content: center; gap: 8px; margin-top: 38px; }
+.archive-pagination[hidden], .archive__status[hidden] { display: none; }
+.archive-pagination button { min-width: 40px; min-height: 40px; padding: 0 12px; border: 1px solid rgba(158,166,211,.45); border-radius: 12px; background: rgba(255,255,255,.88); color: #59618a; font: inherit; cursor: pointer; }
+.archive-pagination button[aria-current="page"] { border-color: #7481e9; background: #7481e9; color: white; }
+.archive-pagination button:disabled { opacity: .45; cursor: default; }
+@media (max-width: 1300px) { .archive-grid { grid-template-columns: repeat(4, minmax(0, 240px)); } }
+@media (max-width: 1040px) { .archive-grid { grid-template-columns: repeat(3, minmax(0, 240px)); } }
+@media (max-width: 900px) { .archive { width: calc(100% - 48px); margin-top: 48px; } }
+@media (max-width: 780px) { .archive-grid { grid-template-columns: repeat(2, minmax(0, 240px)); } }
+@media (max-width: 600px) { .archive { width: calc(100% - 32px); margin-top: 38px; } .archive__intro { align-items: stretch; flex-direction: column; } .archive-search { width: 100%; } .archive-pagination { flex-wrap: wrap; } }
+@media (max-width: 400px) { .archive-grid { grid-template-columns: minmax(0, 240px); } }
+@media (prefers-reduced-motion: reduce) { .character-card { transition: none; } }
+
+/* Show the scenery first, then introduce the archive in three gentle steps. */
+@keyframes archive-rise-in {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes archive-soft-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.navigation-bar { animation: archive-rise-in 1s cubic-bezier(.22, 1, .36, 1) .35s backwards; }
+.archive__intro { animation: archive-soft-in 1s ease-out 1.3s backwards; }
+.archive__meta, .archive__status { animation: archive-soft-in .9s ease-out 1.45s backwards; }
+.character-card--enter {
+    animation: archive-rise-in 1.05s cubic-bezier(.22, 1, .36, 1) calc(2.15s + var(--entry-order, 0) * 65ms) backwards;
+}
+.archive-pagination--enter { animation: archive-soft-in .9s ease-out 2.5s backwards; }
+@media (prefers-reduced-motion: reduce) {
+    .navigation-bar, .archive__intro, .archive__meta, .archive__status,
+    .character-card--enter, .archive-pagination--enter { animation: none; }
+}
+
+@media (max-width: 600px) and (pointer: coarse) {
+    .archive-search input { min-width: 0; font-size: 16px; }
+    .archive-pagination button { min-height: 44px; min-width: 44px; }
+}

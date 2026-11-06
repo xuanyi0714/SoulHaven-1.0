@@ -1,0 +1,14 @@
+/* Reserve each element's space while the homepage opens in sequence. */
+.home-pending [data-home-reveal],
+.home-pending [data-home-action] {
+    opacity: 0;
+    visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-pending [data-home-reveal],
+    .home-pending [data-home-action] {
+        opacity: 1;
+        visibility: visible;
+    }
+}

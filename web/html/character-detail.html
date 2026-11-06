@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="角色介绍">
+        <title>角色介绍</title>
+        <link rel="icon" href="/static/pictures/favicon.png">
+        <link rel="stylesheet" href="/static/css/character_detail.css">
+        <link rel="stylesheet" href="/static/css/landing-responsive.css">
+      <link rel="stylesheet" href="/static/css/entrance-skip.css">
+  <script src="/static/js/skip-entrance.js" defer></script>
+</head>
+    <body style="margin:0;">
+        <section id="main" style="
+            min-height: 100vh;
+            background-image: url('/static/pictures/main.png');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            padding-top:18px;
+            ">
+            <header class="navigation-bar" id="navigation">
+                <span class="main" style="
+                    font-family:serif;
+                    font-weight:630;
+                    font-size:50px;
+                    margin:0px;
+                    display:inline-block;
+                ">灵栖</span>
+                <span class="main star" style="
+                    position:relative;
+                    bottom:18px;
+                ">✦</span>
+                <a class="entrance" href="/" title="跳转至首页">首页</a>
+                <a class="entrance active" title="跳转至角色档案" href="#navigation">角色档案</a>
+                <a class="entrance" title="跳转至聊天试玩" href="/chat.html">聊天试玩</a>
+                <span class="entrance" aria-disabled="true" title="世界设定尚未开放">世界设定</span>
+                <a class="entrance" title="快速开始聊天" href="/chat.html" style="
+                    color:rgb(255, 255, 255);
+                    background:radial-gradient(
+                        ellipse at center,
+                        rgb(76, 91, 238) 0%,
+                        rgb(96, 110, 247) 55%,
+                        rgb(135, 147, 255) 100%
+                    );
+                    border-radius:99px;
+                    padding:14px 50px;
+                ">立即进入</a>
+            </header>
+            <div class="info" style="
+            min-height: calc(100vh - 128px);
+            margin-right: 6vw;
+            display:flex;
+            justify-content: flex-end;
+            align-items: center;
+            ">
+                <section class="info-card">
+                    <div style="
+                            display:inline-flex;
+                            gap:10px;
+                            position: absolute;
+                            top: -45px;
+                            left: 20px;
+                            font-size: 20px;
+                            color: aliceblue;
+                        ">
+                        <img src="/static/pictures/home.png" alt="首页" style="
+                                height: 25px;
+                                position: relative;
+                                top:2px;
+                            ">
+                        <span>首页</span>
+                        <span>></span>
+                        <span>角色档案</span>
+                        <span>></span>
+                        <span>角色名占位符</span>
+                    </div>
+                    <header id="foreword" style="
+                        position: relative;
+                        bottom: 5px;
+                    ">
+                        <span class="star" style="
+                            position: relative;
+                            left:20px;
+                            font-size: 25px;
+                            ">✦</span>
+                        <span class="label" title="角色档案" >角色档案</span>
+                    </header>
+                    <br>
+                    <div class="character-name-row">
+                        <h1 id="name">角色姓名</h1>
+                        <span class="name-star" aria-hidden="true">
+                            ✦
+                        </span>
+                    </div>
+                    <span id="English_name">English_name</span>
+                    <div class="profile-divider" style="
+                        width: calc(100% + 36px);
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                        margin: 30px -18px;;
+                        position: relative;
+                        bottom:15px;
+                    ">
+                        <div style="
+                            flex: 1;
+                            height: 1px;
+                            background: linear-gradient(
+                                to right,
+                                rgba(111, 130, 255, 0.10) 0%,
+                                rgba(111, 130, 255, 0.22) 35%,
+                                rgba(111, 130, 255, 0.58) 100%
+                            );
+                        "></div>
+                        <span aria-hidden="true" style="
+                            color: rgb(111, 126, 238);
+                            font-size: 22px;
+                            line-height: 1;
+                            text-shadow:
+                                0 0 8px rgba(111, 130, 255, 0.58),
+                                0 0 18px rgba(137, 112, 255, 0.34);
+                        ">
+                            ✦
+                        </span>
+                        <div style="
+                            flex: 1;
+                            height: 1px;
+                            background: linear-gradient(
+                                to left,
+                                rgba(111, 130, 255, 0.10) 0%,
+                                rgba(111, 130, 255, 0.22) 35%,
+                                rgba(111, 130, 255, 0.58) 100%
+                            );
+                        "></div>
+                    </div>
+                    <div class="description">角色描述</div>
+                    <div class="basic-info">
+                        <div class="single-info">
+                            <img src="/static/pictures/people.png" alt="年龄" class="info-icon">
+                            <span class="info-label">年龄：</span>
+                            <span class="info-value">占位符</span>
+                        </div>
+                        <div class="single-info">
+                            <img src="/static/pictures/occupation.png" alt="职业" class="info-icon">
+                            <span class="info-label">职业：</span>
+                            <span class="info-value">占位符</span>
+                        </div>
+                        <div class="single-info">
+                            <img src="/static/pictures/location.png" alt="所在地" class="info-icon">
+                            <span class="info-label">所在地：</span>
+                            <span class="info-value">占位符</span>
+                        </div>
+                    </div>
+                <div class="buttons">
+                    <a class="button secondary-button"
+                       title="返回角色列表"
+                       href="/characters.html"
+                    >返回列表
+                    </a>
+                    <a class="button primary-button"
+                       title="开始与当前角色聊天"
+                       href="/chat.html"
+                    >
+                        <span>开始聊天</span>
+                        <span class="button-star" aria-hidden="true">✦</span>
+                    </a>
+                </div>
+                </section>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="440" viewBox="0 0 240 440" fill="none">
+  <defs>
+    <linearGradient id="vine" x1="220" y1="435" x2="100" y2="90" gradientUnits="userSpaceOnUse"><stop stop-color="#7bacb5" stop-opacity=".42"/><stop offset="1" stop-color="#b2a5d7" stop-opacity=".24"/></linearGradient>
+    <linearGradient id="leaf"><stop stop-color="#9fc7bd" stop-opacity=".35"/><stop offset="1" stop-color="#e7c0ae" stop-opacity=".2"/></linearGradient>
+  </defs>
+  <circle cx="202" cy="220" r="92" stroke="#b9b4d6" stroke-opacity=".23"/>
+  <circle cx="202" cy="220" r="72" stroke="#b9b4d6" stroke-opacity=".16" stroke-dasharray="2 7"/>
+  <path d="M211 440c-48-96-69-177-59-263 6-51 0-78-16-107" stroke="url(#vine)" stroke-width="1.5"/>
+  <path d="M179 360c-51-6-62-30-49-56 35 2 46 23 49 56ZM164 310c45-22 54-50 31-72-29 15-38 40-31 72ZM152 252c-41-7-56-26-42-48 32 4 41 21 42 48ZM152 207c33-19 41-41 24-58-26 13-32 32-24 58ZM150 153c-31-9-39-27-29-43 23 8 31 22 29 43Z" fill="url(#leaf)"/>
+  <path d="m67 163 3.5 12 12 3.5-12 3.5-3.5 12-3.5-12-12-3.5 12-3.5 3.5-12ZM199 76l3 10 10 3-10 3-3 10-3-10-10-3 10-3 3-10ZM59 332l2 7 7 2-7 2-2 7-2-7-7-2 7-2 2-7Z" fill="#bdadd6" fill-opacity=".42"/>
+  <circle cx="42" cy="272" r="2" fill="#c1a7be" fill-opacity=".4"/>
+  <circle cx="112" cy="58" r="2.5" fill="#d6b8a0" fill-opacity=".4"/>
+  <circle cx="214" cy="149" r="3" fill="#9cbbbc" fill-opacity=".35"/>
+</svg>

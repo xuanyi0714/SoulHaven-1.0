@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="角色档案">
+  <title>角色档案 · 灵栖</title>
+  <link rel="icon" href="/static/pictures/favicon.png">
+  <link rel="stylesheet" href="/static/css/character_detail.css">
+  <script src="/static/js/character_detail.js" defer></script>
+  <link rel="stylesheet" href="/static/css/entrance-skip.css">
+  <script src="/static/js/skip-entrance.js" defer></script>
+  <script src="/static/js/media.js" defer></script>
+  <script src="/static/js/group-chat.js" defer></script>
+</head>
+<body>
+  <div class="wallpaper" id="wallpaper" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="/">灵栖 <span>✦</span></a>
+    <nav aria-label="主导航"><a href="/">首页</a><a href="/characters.html" aria-current="page">角色档案</a><a href="/chat.html">角色私聊</a><a href="#group-chat" data-group-chat>角色群聊</a></nav>
+  </header>
+  <main class="layout">
+    <section class="profile" aria-labelledby="profileName">
+      <div class="profile-top"><a class="back-link" href="/characters.html">← 返回角色档案</a><div class="actions"><button type="button" id="editButton">编辑</button><button type="button" id="cancelButton" hidden>返回</button><button type="submit" form="profileForm" id="saveButton" hidden>保存</button></div></div>
+      <p class="eyebrow">SOULHAVEN · CHARACTER ARCHIVE</p>
+      <h1 id="profileName">角色档案</h1><p class="english" id="englishName"></p>
+      <div class="divider"><span>✦</span></div>
+      <p id="status" role="status" aria-live="polite">正在加载角色档案…</p>
+      <form id="profileForm" hidden><div class="fields" id="fields"></div></form>
+      <p class="save-reminder" id="saveReminder" hidden>修改完成后别忘了点击保存哦~</p>
+    </section>
+  </main>
+  <dialog id="leaveDialog" aria-labelledby="dialogTitle"><h2 id="dialogTitle">还有未保存的修改</h2><p>离开前要保存角色档案吗？</p><div class="dialog-actions"><button type="button" id="stayButton">继续编辑</button><button type="button" id="discardButton">不保存</button><button type="button" id="saveLeaveButton">保存</button></div></dialog>
+</body>
+</html>

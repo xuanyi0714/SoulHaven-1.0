@@ -1,0 +1,45 @@
+/* Preserve the archive pages' desktop design while keeping their navigation usable. */
+@media (max-width: 1400px) {
+    .navigation-bar {
+        height: auto;
+        min-height: 96px;
+        padding: 18px 28px;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .navigation-bar > .entrance:not(:first-of-type) {
+        margin-left: clamp(8px, 2vw, 25px);
+    }
+    .navigation-bar > .entrance { font-size: 19px; }
+    .entrance.active::after { width: 100%; top: calc(100% + 7px); right: 0; }
+}
+
+/* The detail card and breadcrumb must fit even with a short or narrow window. */
+.character-name-row { white-space: normal; }
+#name { min-width: 0; overflow-wrap: anywhere; }
+#English_name { overflow-wrap: anywhere; }
+
+@media (max-width: 1500px) {
+    #name { font-size: clamp(48px, 5vw, 85px); }
+    section.info-card { width: min(600px, max(420px, 36vw)); }
+}
+
+@media (max-width: 900px), (max-height: 800px) {
+    .info {
+        min-height: 0 !important;
+        margin: 70px 6vw 0 !important;
+        padding-bottom: 32px;
+    }
+    section.info-card { width: min(600px, 100%); }
+}
+
+@media (max-width: 600px) {
+    .navigation-bar { width: calc(100% - 24px); border-radius: 28px; }
+    .navigation-bar > .entrance:first-of-type { margin-left: 0; }
+    .navigation-bar > .entrance { font-size: 16px; }
+    .navigation-bar > a:last-child { padding: 10px 22px !important; }
+    section.info-card { padding: 32px 24px; }
+    .single-info { padding: 6px; }
+    .buttons { gap: 12px; }
+    .button { padding: 12px; font-size: 16px; }
+}
